@@ -1,7 +1,7 @@
 {
   "name": "@grotte/python-sdk",
   "private": true,
-  "version": "2.21.0",
+  "version": "0.1.0",
   "scripts": {
     "example": "poetry run python example.py",
     "test": "poetry run pytest -n 4 --verbose -x",

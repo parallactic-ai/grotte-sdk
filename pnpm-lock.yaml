@@ -81,6 +81,9 @@ importers:
       dockerfile-ast:
         specifier: ^0.6.1
         version: 0.6.1
+      grotte:
+        specifier: workspace:*
+        version: link:../js-sdk
       handlebars:
         specifier: ^4.7.9
         version: 4.7.9
