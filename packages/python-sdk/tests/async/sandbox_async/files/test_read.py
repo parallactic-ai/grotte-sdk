@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import FileNotFoundException, NotFoundException, AsyncSandbox
+from grotte import FileNotFoundException, NotFoundException, AsyncSandbox
 
 
 async def test_read_file(async_sandbox: AsyncSandbox):

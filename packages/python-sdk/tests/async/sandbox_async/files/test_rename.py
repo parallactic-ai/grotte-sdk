@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import FileNotFoundException, AsyncSandbox
+from grotte import FileNotFoundException, AsyncSandbox
 
 
 async def test_rename_file(async_sandbox: AsyncSandbox):

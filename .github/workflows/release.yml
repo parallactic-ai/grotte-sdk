@@ -101,21 +101,21 @@ jobs:
         id: js
         if: steps.version.outputs.release == 'true'
         run: |
-          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "e2b")
+          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "grotte")
           echo "release=$IS_RELEASE" >> "$GITHUB_OUTPUT"
 
       - name: Check Python SDK Release
         id: python
         if: steps.version.outputs.release == 'true'
         run: |
-          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "@e2b/python-sdk")
+          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "@grotte/python-sdk")
           echo "release=$IS_RELEASE" >> "$GITHUB_OUTPUT"
 
       - name: Check CLI Release
         id: cli
         if: steps.version.outputs.release == 'true'
         run: |
-          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "@e2b/cli")
+          IS_RELEASE=$(./.github/scripts/is_release_for_package.sh "@grotte/cli")
           echo "release=$IS_RELEASE" >> "$GITHUB_OUTPUT"
 
   python-tests:

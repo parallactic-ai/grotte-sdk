@@ -2,11 +2,11 @@ import asyncio
 
 import pytest
 
-from e2b.api.client_async import AsyncTransportWithLogger
-from e2b.api.client_async import get_api_client as get_async_api_client
-from e2b.api.client_sync import TransportWithLogger
-from e2b.api.client_sync import get_api_client as get_sync_api_client
-from e2b.connection_config import ConnectionConfig
+from grotte.api.client_async import AsyncTransportWithLogger
+from grotte.api.client_async import get_api_client as get_async_api_client
+from grotte.api.client_sync import TransportWithLogger
+from grotte.api.client_sync import get_api_client as get_sync_api_client
+from grotte.connection_config import ConnectionConfig
 
 
 def test_sync_api_client_proxy_uses_explicit_transport():

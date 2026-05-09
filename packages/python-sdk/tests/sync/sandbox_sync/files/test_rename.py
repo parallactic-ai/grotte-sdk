@@ -1,5 +1,5 @@
 import pytest
-from e2b import FileNotFoundException, Sandbox
+from grotte import FileNotFoundException, Sandbox
 
 
 def test_rename_file(sandbox: Sandbox):

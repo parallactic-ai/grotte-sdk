@@ -970,9 +970,9 @@
       "type": "object",
       "x-dockerHubUrl": "https://hub.docker.com/mcp/server/dynatrace-mcp-server/overview"
     },
-    "e2b": {
-      "title": "E2B",
-      "description": "Giving Claude ability to run code with E2B via MCP (Model Context Protocol).",
+    "grotte": {
+      "title": "GROTTE",
+      "description": "Giving Claude ability to run code with GROTTE via MCP (Model Context Protocol).",
       "required": [
         "apiKey"
       ],
@@ -983,7 +983,7 @@
         }
       },
       "type": "object",
-      "x-dockerHubUrl": "https://hub.docker.com/mcp/server/e2b/overview"
+      "x-dockerHubUrl": "https://hub.docker.com/mcp/server/grotte/overview"
     },
     "edubase": {
       "title": "EduBase",

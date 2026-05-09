@@ -4,13 +4,13 @@ from unittest.mock import AsyncMock
 import pytest
 from packaging.version import Version
 
-from e2b import AsyncSandbox
-from e2b.connection_config import ConnectionConfig
-import e2b.sandbox_async.main as sandbox_async_main
+from grotte import AsyncSandbox
+from grotte.connection_config import ConnectionConfig
+import grotte.sandbox_async.main as sandbox_async_main
 
 
 BASE_API_KEY = "base-api-key"
-BASE_DOMAIN = "base.e2b.dev"
+BASE_DOMAIN = "base.grotte.parallactic.fr"
 BASE_REQUEST_TIMEOUT = 11
 BASE_DEBUG = False
 BASE_HEADERS = {"X-Test": "base"}
@@ -36,7 +36,7 @@ def create_sandbox(monkeypatch) -> AsyncSandbox:
 
     return AsyncSandbox(
         sandbox_id="sbx-test",
-        sandbox_domain="sandbox.e2b.dev",
+        sandbox_domain="sandbox.grotte.parallactic.fr",
         envd_version=Version("0.2.4"),
         envd_access_token="tok",
         traffic_access_token="tok",
@@ -74,7 +74,7 @@ async def test_pause_applies_overrides(monkeypatch):
 
     sandbox = create_sandbox(monkeypatch)
     await sandbox.pause(
-        domain="override.e2b.dev",
+        domain="override.grotte.parallactic.fr",
         request_timeout=20,
         headers={"X-Extra": "1"},
     )
@@ -82,7 +82,7 @@ async def test_pause_applies_overrides(monkeypatch):
     mock_pause.assert_awaited_once()
     assert mock_pause.call_args.kwargs["sandbox_id"] == "sbx-test"
     assert mock_pause.call_args.kwargs["api_key"] == BASE_API_KEY
-    assert mock_pause.call_args.kwargs["domain"] == "override.e2b.dev"
+    assert mock_pause.call_args.kwargs["domain"] == "override.grotte.parallactic.fr"
     assert mock_pause.call_args.kwargs["request_timeout"] == 20
     assert mock_pause.call_args.kwargs["debug"] == BASE_DEBUG
     assert mock_pause.call_args.kwargs["headers"]["X-Test"] == BASE_HEADERS["X-Test"]

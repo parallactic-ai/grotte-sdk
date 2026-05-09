@@ -1,8 +1,8 @@
 import sys
 import pytest
 
-from e2b.template.utils import validate_relative_path
-from e2b.exceptions import TemplateException
+from grotte.template.utils import validate_relative_path
+from grotte.exceptions import TemplateException
 
 is_windows = sys.platform == "win32"
 

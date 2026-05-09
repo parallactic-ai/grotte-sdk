@@ -3,8 +3,8 @@ from io import BytesIO
 
 import pytest
 
-from e2b import Volume
-from e2b.exceptions import NotFoundException, VolumeException
+from grotte import Volume
+from grotte.exceptions import NotFoundException, VolumeException
 
 
 class TestWriteFileAndReadFile:

@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from e2b import Template
+from grotte import Template
 
 
 @pytest.mark.skip_debug()

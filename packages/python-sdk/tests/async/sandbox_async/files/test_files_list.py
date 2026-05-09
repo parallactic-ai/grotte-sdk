@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 
-from e2b import AsyncSandbox, FileType
+from grotte import AsyncSandbox, FileType
 
 
 async def test_list_directory(async_sandbox: AsyncSandbox):

@@ -34,7 +34,7 @@ function convertVolumeEntryStat(
 }
 
 /**
- * Module for interacting with E2B volumes.
+ * Module for interacting with GROTTE volumes.
  *
  * Create a `Volume` instance to interact with a volume by its ID,
  * or use the static methods to manage volumes.

@@ -26,7 +26,7 @@ const mocks = vi.hoisted(() => {
   }
 })
 
-vi.mock('e2b', () => {
+vi.mock('grotte', () => {
   class CommandExitError extends Error {
     exitCode: number
     constructor(exitCode: number) {
@@ -127,7 +127,7 @@ describe('sandbox exec closeStdin handling', () => {
   })
 
   test('keeps NotFoundError from closeStdin non-fatal', async () => {
-    const { NotFoundError } = await import('e2b')
+    const { NotFoundError } = await import('grotte')
     mocks.closeStdin.mockRejectedValue(new NotFoundError('already exited'))
 
     const exitSpy = vi
@@ -147,7 +147,7 @@ describe('sandbox exec closeStdin handling', () => {
   })
 
   test('stops stdin streaming after NotFoundError from sendStdin', async () => {
-    const { NotFoundError } = await import('e2b')
+    const { NotFoundError } = await import('grotte')
     mocks.sendStdin.mockRejectedValueOnce(new NotFoundError('already exited'))
     mocks.streamStdinChunks.mockImplementation(
       async (
@@ -177,7 +177,7 @@ describe('sandbox exec closeStdin handling', () => {
     expect(mocks.closeStdin).not.toHaveBeenCalled()
     expect(mocks.wait).toHaveBeenCalledTimes(1)
     expect(errorSpy).toHaveBeenCalledWith(
-      'e2b: Remote command exited before stdin could be delivered.'
+      'grotte: Remote command exited before stdin could be delivered.'
     )
     expect(exitSpy).toHaveBeenCalledWith(0)
   })

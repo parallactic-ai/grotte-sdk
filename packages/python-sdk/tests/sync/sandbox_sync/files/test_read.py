@@ -1,5 +1,5 @@
 import pytest
-from e2b import FileNotFoundException, NotFoundException
+from grotte import FileNotFoundException, NotFoundException
 
 
 def test_read_file(sandbox):

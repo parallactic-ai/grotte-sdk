@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from e2b import AsyncSandbox, SandboxQuery, SandboxState
+from grotte import AsyncSandbox, SandboxQuery, SandboxState
 
 
 @pytest.mark.skip_debug()

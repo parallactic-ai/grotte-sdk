@@ -2,7 +2,7 @@ import pytest
 
 from asyncio import Event
 
-from e2b import (
+from grotte import (
     FileNotFoundException,
     AsyncSandbox,
     FilesystemEvent,

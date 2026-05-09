@@ -1,5 +1,5 @@
 {
-  "name": "e2b",
+  "name": "grotte",
   "private": true,
   "scripts": {
     "version": "pnpm changeset version && pnpm run -r postVersion",

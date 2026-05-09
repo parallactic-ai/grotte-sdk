@@ -2,12 +2,12 @@ import * as commander from 'commander'
 
 import { ensureAPIKey } from 'src/api'
 import { asBold } from 'src/utils/format'
-import * as e2b from 'e2b'
-import { Sandbox, components } from 'e2b'
+import * as grotte from 'grotte'
+import { Sandbox, components } from 'grotte'
 import { parseMetadata } from './utils'
 
 async function killSandbox(sandboxID: string, apiKey: string) {
-  const killed = await e2b.Sandbox.kill(sandboxID, { apiKey })
+  const killed = await grotte.Sandbox.kill(sandboxID, { apiKey })
   if (killed) {
     console.log(`Sandbox ${asBold(sandboxID)} has been killed`)
   } else {

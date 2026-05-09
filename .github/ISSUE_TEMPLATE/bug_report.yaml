@@ -13,7 +13,7 @@ body:
     attributes:
       label: Environment
       description: Environment details (used libraries version, OS, etc..)
-      placeholder: e2b==1.2.3, macOS 14
+      placeholder: grotte==1.2.3, macOS 14
     validations:
       required: true
 

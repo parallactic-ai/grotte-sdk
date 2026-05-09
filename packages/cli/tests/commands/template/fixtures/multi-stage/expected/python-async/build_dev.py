@@ -1,5 +1,5 @@
 import asyncio
-from e2b import AsyncTemplate, default_build_logger
+from grotte import AsyncTemplate, default_build_logger
 from .template import template
 
 

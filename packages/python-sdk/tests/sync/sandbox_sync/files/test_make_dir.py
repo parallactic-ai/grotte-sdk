@@ -1,6 +1,6 @@
 import uuid
 
-from e2b import Sandbox
+from grotte import Sandbox
 
 
 def test_make_directory(sandbox: Sandbox):

@@ -1,4 +1,4 @@
-import { Template, defaultBuildLogger } from 'e2b'
+import { Template, defaultBuildLogger } from 'grotte'
 import { template } from './template'
 
 async function main() {

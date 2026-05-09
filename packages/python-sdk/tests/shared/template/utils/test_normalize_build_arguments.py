@@ -1,7 +1,7 @@
 import pytest
 
-from e2b.template.utils import normalize_build_arguments
-from e2b.exceptions import TemplateException
+from grotte.template.utils import normalize_build_arguments
+from grotte.exceptions import TemplateException
 
 
 def test_handles_string_name():

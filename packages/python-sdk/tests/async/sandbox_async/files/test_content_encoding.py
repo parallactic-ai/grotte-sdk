@@ -1,5 +1,5 @@
-from e2b import AsyncSandbox
-from e2b.sandbox.filesystem.filesystem import WriteEntry
+from grotte import AsyncSandbox
+from grotte.sandbox.filesystem.filesystem import WriteEntry
 
 
 async def test_write_and_read_with_gzip(async_sandbox: AsyncSandbox, debug):

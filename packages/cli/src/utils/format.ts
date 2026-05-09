@@ -1,5 +1,5 @@
 import * as chalk from 'chalk'
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 import * as highlight from 'cli-highlight'
 import * as boxen from 'boxen'
 
@@ -18,7 +18,7 @@ export function asFormattedConfig(config: UserConfig) {
 }
 
 export function asFormattedTeam(
-  team: e2b.components['schemas']['Team'],
+  team: grotte.components['schemas']['Team'],
   selected: string
 ) {
   const name = asBold(team.name)
@@ -29,8 +29,8 @@ export function asFormattedTeam(
 }
 
 export function asFormattedSandboxTemplate(
-  template: Pick<e2b.components['schemas']['Template'], 'templateID'> & {
-    aliases?: e2b.components['schemas']['Template']['aliases']
+  template: Pick<grotte.components['schemas']['Template'], 'templateID'> & {
+    aliases?: grotte.components['schemas']['Template']['aliases']
   },
   configLocalPath?: string
 ) {

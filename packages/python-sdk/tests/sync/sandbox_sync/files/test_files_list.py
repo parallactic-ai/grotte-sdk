@@ -1,7 +1,7 @@
 import uuid
 from typing import Any
 
-from e2b import Sandbox, FileType
+from grotte import Sandbox, FileType
 
 
 def test_list_directory(sandbox: Sandbox):

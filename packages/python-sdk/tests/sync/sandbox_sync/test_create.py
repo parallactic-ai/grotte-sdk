@@ -3,12 +3,12 @@ from time import sleep
 import httpx
 import pytest
 
-from e2b import Sandbox, SandboxState
-from e2b.api.client.models import (
+from grotte import Sandbox, SandboxState
+from grotte.api.client.models import (
     NewSandbox,
     SandboxAutoResumeConfig,
 )
-from e2b.sandbox.sandbox_api import SandboxQuery, get_auto_resume_enabled
+from grotte.sandbox.sandbox_api import SandboxQuery, get_auto_resume_enabled
 
 
 @pytest.mark.skip_debug()

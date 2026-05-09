@@ -61,7 +61,7 @@ jobs:
       - name: Upload JS SDK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: e2b-js-sdk
+          name: grotte-js-sdk
           path: packages/js-sdk/*.tgz
 
       - name: Build CLI
@@ -77,7 +77,7 @@ jobs:
       - name: Upload CLI artifact
         uses: actions/upload-artifact@v4
         with:
-          name: e2b-cli
+          name: grotte-cli
           path: packages/cli/*.tgz
 
       - name: Set up Python
@@ -103,7 +103,7 @@ jobs:
       - name: Upload Python SDK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: e2b-python-sdk
+          name: grotte-python-sdk
           path: packages/python-sdk/dist/*
 
       - name: Comment on PR
@@ -119,25 +119,25 @@ jobs:
           PY_VERSION=$(grep '^version' packages/python-sdk/pyproject.toml | head -1 | sed 's/.*"\(.*\)"/\1/')
           PY_WHL=$(ls packages/python-sdk/dist/*.whl | xargs -n1 basename)
 
-          BODY="<!-- e2b-pkg-artifacts -->"$'\n'
+          BODY="<!-- grotte-pkg-artifacts -->"$'\n'
           BODY+="### Package Artifacts"$'\n\n'
           BODY+="Built from ${GITHUB_SHA::7}. Download artifacts from [this workflow run](${RUN_URL})."$'\n\n'
-          BODY+="**JS SDK** (\`e2b@${JS_VERSION}\`):"$'\n'
+          BODY+="**JS SDK** (\`grotte@${JS_VERSION}\`):"$'\n'
           BODY+='```sh'$'\n'
           BODY+="npm install ./${JS_TGZ}"$'\n'
           BODY+='```'$'\n\n'
-          BODY+="**CLI** (\`@e2b/cli@${CLI_VERSION}\`):"$'\n'
+          BODY+="**CLI** (\`@grotte/cli@${CLI_VERSION}\`):"$'\n'
           BODY+='```sh'$'\n'
           BODY+="npm install ./${CLI_TGZ}"$'\n'
           BODY+='```'$'\n\n'
-          BODY+="**Python SDK** (\`e2b==${PY_VERSION}\`):"$'\n'
+          BODY+="**Python SDK** (\`grotte==${PY_VERSION}\`):"$'\n'
           BODY+='```sh'$'\n'
           BODY+="pip install ./${PY_WHL}"$'\n'
           BODY+='```'$'\n'
 
           COMMENT_ID=$(gh api "repos/${{ github.repository }}/issues/${PR_NUMBER}/comments" \
             --paginate \
-            --jq '.[] | select(.body | contains("<!-- e2b-pkg-artifacts -->")) | .id' \
+            --jq '.[] | select(.body | contains("<!-- grotte-pkg-artifacts -->")) | .id' \
             | tail -1)
 
           if [ -n "$COMMENT_ID" ]; then

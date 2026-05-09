@@ -1,5 +1,5 @@
-from e2b import Sandbox
-from e2b.sandbox.commands.command_handle import PtySize
+from grotte import Sandbox
+from grotte.sandbox.commands.command_handle import PtySize
 
 
 def test_pty(sandbox: Sandbox):

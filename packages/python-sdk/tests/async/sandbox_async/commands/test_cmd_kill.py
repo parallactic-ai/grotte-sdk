@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import AsyncSandbox, CommandExitException
+from grotte import AsyncSandbox, CommandExitException
 
 
 async def test_kill_process(async_sandbox: AsyncSandbox):

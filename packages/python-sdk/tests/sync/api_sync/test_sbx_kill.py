@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import Sandbox, SandboxQuery, SandboxState
+from grotte import Sandbox, SandboxQuery, SandboxState
 
 
 @pytest.mark.skip_debug()

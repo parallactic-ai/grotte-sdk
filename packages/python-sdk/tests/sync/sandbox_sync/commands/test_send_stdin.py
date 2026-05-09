@@ -1,4 +1,4 @@
-from e2b import Sandbox
+from grotte import Sandbox
 
 
 def test_send_stdin_to_process(sandbox: Sandbox):

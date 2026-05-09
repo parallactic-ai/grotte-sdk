@@ -6,7 +6,7 @@ import { createServer, type IncomingMessage, type Server } from 'http'
 import { AddressInfo } from 'net'
 import { uploadFile } from '../../src/template/buildApi'
 
-// Regression test for e2b-dev/e2b#1243 — uploadFile used to pass a Node
+// Regression test for parallactic-ai/grotte-sdk#1243 — uploadFile used to pass a Node
 // Readable directly to fetch, which made undici fall back to
 // Transfer-Encoding: chunked. S3 presigned PUT URLs reject that with 501
 // NotImplemented. The fix buffers the archive first so Content-Length is set.

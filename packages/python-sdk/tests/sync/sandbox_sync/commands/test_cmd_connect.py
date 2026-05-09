@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import NotFoundException
+from grotte import NotFoundException
 
 
 def test_connect_to_process(sandbox):

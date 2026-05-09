@@ -1,5 +1,5 @@
 import pytest
-from e2b import AsyncSandbox
+from grotte import AsyncSandbox
 
 
 @pytest.mark.skip_debug()

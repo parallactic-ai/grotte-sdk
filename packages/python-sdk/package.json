@@ -1,5 +1,5 @@
 {
-  "name": "@e2b/python-sdk",
+  "name": "@grotte/python-sdk",
   "private": true,
   "version": "2.21.0",
   "scripts": {

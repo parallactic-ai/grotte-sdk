@@ -1,4 +1,4 @@
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 import * as commander from 'commander'
 import * as path from 'path'
 
@@ -38,7 +38,7 @@ export function createCommand(
       ) => {
         if (deprecated) {
           console.warn(
-            `Warning: The '${name}' command is deprecated and will be removed in future releases. Please use 'e2b sandbox create' instead.`
+            `Warning: The '${name}' command is deprecated and will be removed in future releases. Please use 'grotte sandbox create' instead.`
           )
         }
         try {
@@ -72,7 +72,7 @@ export function createCommand(
             templateID = 'base'
           }
 
-          const sandbox = await e2b.Sandbox.create(templateID, { apiKey })
+          const sandbox = await grotte.Sandbox.create(templateID, { apiKey })
           printDashboardSandboxInspectUrl(sandbox.sandboxId)
 
           if (!opts.detach) {
@@ -95,8 +95,8 @@ export async function connectSandbox({
   sandbox,
   template,
 }: {
-  sandbox: e2b.Sandbox
-  template: Pick<e2b.components['schemas']['Template'], 'templateID'>
+  sandbox: grotte.Sandbox
+  template: Pick<grotte.components['schemas']['Template'], 'templateID'>
 }) {
   // keep-alive loop — track the in-flight promise so we can await it on shutdown
   let pendingKeepAlive: Promise<void> = Promise.resolve()

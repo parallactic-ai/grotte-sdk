@@ -9,27 +9,27 @@ const FILE_TIMEOUT_MS = 3_600_000 // 1 hour
 
 export interface VolumeApiOpts {
   /**
-   * E2B API key to use for authentication.
+   * GROTTE API key to use for authentication.
    *
-   * @default E2B_API_KEY // environment variable
+   * @default GROTTE_API_KEY // environment variable
    */
   token?: string
   /**
    * Domain to use for the volume API.
    *
-   * @default E2B_DOMAIN // environment variable or `e2b.app`
+   * @default GROTTE_DOMAIN // environment variable or `grotte.parallactic.fr`
    */
   domain?: string
   /**
    * If true the SDK starts in the debug mode and connects to the local volume API server.
    * @internal
-   * @default E2B_DEBUG // environment variable or `false`
+   * @default GROTTE_DEBUG // environment variable or `false`
    */
   debug?: boolean
   /**
    * API Url to use for the API.
    * @internal
-   * @default E2B_VOLUME_API_URL // environment variable or `https://api.${domain}`
+   * @default GROTTE_VOLUME_API_URL // environment variable or `https://api.${domain}`
    */
   apiUrl?: string
   /**
@@ -72,15 +72,15 @@ export class VolumeConnectionConfig {
   }
 
   private static get domain() {
-    return getEnvVar('E2B_DOMAIN') || 'e2b.app'
+    return getEnvVar('GROTTE_DOMAIN') || 'grotte.parallactic.fr'
   }
 
   private static get debug() {
-    return (getEnvVar('E2B_DEBUG') || 'false').toLowerCase() === 'true'
+    return (getEnvVar('GROTTE_DEBUG') || 'false').toLowerCase() === 'true'
   }
 
   private static get volumeApiUrl() {
-    return getEnvVar('E2B_VOLUME_API_URL')
+    return getEnvVar('GROTTE_VOLUME_API_URL')
   }
 
   getSignal(requestTimeoutMs?: number) {
@@ -91,7 +91,7 @@ export class VolumeConnectionConfig {
 }
 
 /**
- * Client for interacting with the E2B Volume API.
+ * Client for interacting with the GROTTE Volume API.
  */
 class VolumeApiClient {
   readonly api: ReturnType<typeof createClient<paths>>

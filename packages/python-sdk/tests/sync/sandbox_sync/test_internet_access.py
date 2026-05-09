@@ -1,6 +1,6 @@
 import pytest
 
-from e2b.sandbox.commands.command_handle import CommandExitException
+from grotte.sandbox.commands.command_handle import CommandExitException
 
 
 @pytest.mark.skip_debug()

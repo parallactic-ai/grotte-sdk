@@ -1,4 +1,4 @@
-from e2b import Template
+from grotte import Template
 
 template = (
     Template()

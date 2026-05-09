@@ -3,7 +3,7 @@ import tempfile
 import tarfile
 import io
 import pytest
-from e2b.template.utils import tar_file_stream
+from grotte.template.utils import tar_file_stream
 
 
 class TestTarFileStream:

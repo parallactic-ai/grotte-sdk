@@ -1,7 +1,7 @@
 import asyncio
 
-from e2b import AsyncSandbox
-from e2b.sandbox.commands.command_handle import PtySize
+from grotte import AsyncSandbox
+from grotte.sandbox.commands.command_handle import PtySize
 
 
 async def test_connect_to_pty(async_sandbox: AsyncSandbox):

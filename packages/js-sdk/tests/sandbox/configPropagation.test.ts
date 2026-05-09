@@ -5,7 +5,7 @@ import { SandboxApi } from '../../src/sandbox/sandboxApi'
 
 const baseConfig = {
   apiKey: 'base-api-key',
-  domain: 'base.e2b.dev',
+  domain: 'base.grotte.parallactic.fr',
   requestTimeoutMs: 1111,
   debug: false,
   headers: { 'X-Test': 'base' },
@@ -14,7 +14,7 @@ const baseConfig = {
 function createSandbox() {
   return new Sandbox({
     sandboxId: 'sbx-test',
-    sandboxDomain: 'sandbox.e2b.dev',
+    sandboxDomain: 'sandbox.grotte.parallactic.fr',
     envdVersion: '0.2.4',
     envdAccessToken: 'tok',
     trafficAccessToken: 'tok',
@@ -46,13 +46,13 @@ describe('Sandbox API config propagation', () => {
     const sandbox = createSandbox()
 
     await sandbox.pause({
-      domain: 'override.e2b.dev',
+      domain: 'override.grotte.parallactic.fr',
       requestTimeoutMs: 9999,
     })
 
     const opts = pauseSpy.mock.calls[0][1]
     assert.equal(opts?.apiKey, baseConfig.apiKey)
-    assert.equal(opts?.domain, 'override.e2b.dev')
+    assert.equal(opts?.domain, 'override.grotte.parallactic.fr')
     assert.equal(opts?.requestTimeoutMs, 9999)
     assert.equal(opts?.debug, baseConfig.debug)
   })

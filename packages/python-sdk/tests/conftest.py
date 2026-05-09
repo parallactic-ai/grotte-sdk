@@ -7,7 +7,7 @@ from typing import Callable, Dict, Optional
 import pytest
 import pytest_asyncio
 
-from e2b import (
+from grotte import (
     AsyncCommandHandle,
     AsyncSandbox,
     AsyncTemplate,
@@ -101,7 +101,7 @@ def build():
         skip_cache: bool = False,
         on_build_logs: Optional[Callable[[LogEntry], None]] = None,
     ):
-        build_name = name or f"e2b-test-{_generate_random_string()}"
+        build_name = name or f"grotte-test-{_generate_random_string()}"
         build_info: Dict[str, Optional[str]] = {"template_id": None, "build_id": None}
 
         def capture_logs(log: LogEntry):
@@ -145,7 +145,7 @@ def async_build():
         skip_cache: bool = False,
         on_build_logs: Optional[Callable[[LogEntry], None]] = None,
     ):
-        build_name = name or f"e2b-test-{_generate_random_string()}"
+        build_name = name or f"grotte-test-{_generate_random_string()}"
         build_info: Dict[str, Optional[str]] = {"template_id": None, "build_id": None}
 
         def capture_logs(log: LogEntry):
@@ -183,14 +183,14 @@ def async_build():
 
 @pytest.fixture
 def debug():
-    return os.getenv("E2B_DEBUG") is not None
+    return os.getenv("GROTTE_DEBUG") is not None
 
 
 @pytest.fixture(autouse=True)
 def skip_by_debug(request, debug):
     if request.node.get_closest_marker("skip_debug"):
         if debug:
-            pytest.skip("skipped because E2B_DEBUG is set")
+            pytest.skip("skipped because GROTTE_DEBUG is set")
 
 
 class Helpers:

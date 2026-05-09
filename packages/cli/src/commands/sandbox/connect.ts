@@ -1,4 +1,4 @@
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 import * as commander from 'commander'
 
 import { spawnConnectedTerminal } from 'src/terminal'
@@ -36,7 +36,7 @@ async function connectToSandbox({
   apiKey: string
   sandboxID: string
 }) {
-  const sandbox = await e2b.Sandbox.connect(sandboxID, { apiKey })
+  const sandbox = await grotte.Sandbox.connect(sandboxID, { apiKey })
 
   printDashboardSandboxInspectUrl(sandbox.sandboxId)
 

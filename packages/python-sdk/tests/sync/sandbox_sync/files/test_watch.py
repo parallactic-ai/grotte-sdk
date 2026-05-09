@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import FileNotFoundException, FilesystemEventType, Sandbox, SandboxException
+from grotte import FileNotFoundException, FilesystemEventType, Sandbox, SandboxException
 
 
 def test_watch_directory_changes(sandbox: Sandbox):

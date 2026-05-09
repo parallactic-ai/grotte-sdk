@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import Sandbox
+from grotte import Sandbox
 
 
 def test_command_envs(sandbox: Sandbox):

@@ -45,7 +45,7 @@ export function handleApiError(
 }
 
 /**
- * Client for interacting with the E2B API.
+ * Client for interacting with the GROTTE API.
  */
 class ApiClient {
   readonly api: ReturnType<typeof createClient<paths>>
@@ -59,16 +59,16 @@ class ApiClient {
   ) {
     if (opts?.requireApiKey && !config.apiKey) {
       throw new AuthenticationError(
-        'API key is required, please visit the Team tab at https://e2b.dev/dashboard to get your API key. ' +
-          'You can either set the environment variable `E2B_API_KEY` ' +
-          "or you can pass it directly to the sandbox like Sandbox.create({ apiKey: 'e2b_...' })"
+        'API key is required, please visit the Team tab at https://grotte.parallactic.fr/dashboard to get your API key. ' +
+          'You can either set the environment variable `GROTTE_API_KEY` ' +
+          "or you can pass it directly to the sandbox like Sandbox.create({ apiKey: 'grt_...' })"
       )
     }
 
     if (opts?.requireAccessToken && !config.accessToken) {
       throw new AuthenticationError(
-        'Access token is required, please visit the Personal tab at https://e2b.dev/dashboard to get your access token. ' +
-          'You can set the environment variable `E2B_ACCESS_TOKEN` or pass the `accessToken` in options.'
+        'Access token is required, please visit the Personal tab at https://grotte.parallactic.fr/dashboard to get your access token. ' +
+          'You can set the environment variable `GROTTE_ACCESS_TOKEN` or pass the `accessToken` in options.'
       )
     }
 

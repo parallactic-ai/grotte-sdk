@@ -1,11 +1,11 @@
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-from e2b.api.client.client import AuthenticatedClient
-from e2b.template_sync.build_api import upload_file
+from grotte.api.client.client import AuthenticatedClient
+from grotte.template_sync.build_api import upload_file
 
 
-# Regression test for e2b-dev/e2b#1243 — upload_file must set Content-Length
+# Regression test for parallactic-ai/grotte-sdk#1243 — upload_file must set Content-Length
 # and must not fall back to Transfer-Encoding: chunked. S3 presigned PUT URLs
 # reject chunked encoding with 501 NotImplemented. httpx sets Content-Length
 # automatically when we pass bytes (tar_buffer.getvalue()); this test guards

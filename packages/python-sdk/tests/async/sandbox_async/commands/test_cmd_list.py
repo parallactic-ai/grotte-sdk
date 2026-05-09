@@ -1,4 +1,4 @@
-from e2b import AsyncSandbox
+from grotte import AsyncSandbox
 
 
 async def test_kill_process(async_sandbox: AsyncSandbox):

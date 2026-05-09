@@ -61,7 +61,7 @@ export interface McpServer {
   dreamfactory?: DreamFactoryMCPServer
   duckduckgo?: DuckDuckGo
   dynatrace?: DynatraceMCPServer
-  e2b?: E2B
+  grotte?: GROTTE
   edubase?: EduBase
   effect?: EffectMCP
   elasticsearch?: Elasticsearch
@@ -641,9 +641,9 @@ export interface DynatraceMCPServer {
   url: string
 }
 /**
- * Giving Claude ability to run code with E2B via MCP (Model Context Protocol).
+ * Giving Claude ability to run code with GROTTE via MCP (Model Context Protocol).
  */
-export interface E2B {
+export interface GROTTE {
   apiKey: string
 }
 /**

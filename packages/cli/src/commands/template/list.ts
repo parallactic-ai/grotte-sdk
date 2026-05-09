@@ -1,12 +1,12 @@
 import * as tablePrinter from 'console-table-printer'
 import * as commander from 'commander'
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 
 import { listAliases } from '../../utils/format'
 import { sortTemplatesAliases } from 'src/utils/templateSort'
 import { client, ensureAccessToken, resolveTeamId } from 'src/api'
 import { teamOption } from '../../options'
-import { handleE2BRequestError } from '../../utils/errors'
+import { handleGrotteRequestError } from '../../utils/errors'
 
 export const listCommand = new commander.Command('list')
   .description('list sandbox templates')
@@ -41,7 +41,7 @@ export const listCommand = new commander.Command('list')
     }
   })
 
-function renderTable(templates: e2b.components['schemas']['Template'][]) {
+function renderTable(templates: grotte.components['schemas']['Template'][]) {
   if (!templates?.length) {
     console.log('No templates found.')
     return
@@ -115,13 +115,13 @@ export async function listSandboxTemplates({
   teamID,
 }: {
   teamID?: string
-}): Promise<e2b.components['schemas']['Template'][]> {
+}): Promise<grotte.components['schemas']['Template'][]> {
   const templates = await client.api.GET('/templates', {
     params: {
       query: { teamID },
     },
   })
 
-  handleE2BRequestError(templates, 'Error getting templates')
+  handleGrotteRequestError(templates, 'Error getting templates')
   return templates.data
 }

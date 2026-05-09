@@ -16,7 +16,7 @@ import {
   teamOption,
 } from 'src/options'
 import {
-  E2BConfig,
+  GrotteConfig,
   configName,
   deleteConfig,
   getConfigPath,
@@ -27,7 +27,7 @@ import { listSandboxTemplates } from './list'
 import { getPromptTemplates } from 'src/utils/templatePrompt'
 import { confirm } from 'src/utils/confirm'
 import { client, resolveTeamId } from 'src/api'
-import { handleE2BRequestError } from '../../utils/errors'
+import { handleGrotteRequestError } from '../../utils/errors'
 
 async function deleteTemplate(templateID: string) {
   const res = await client.api.DELETE('/templates/{templateID}', {
@@ -38,7 +38,7 @@ async function deleteTemplate(templateID: string) {
     },
   })
 
-  handleE2BRequestError(res, 'Error deleting sandbox template')
+  handleGrotteRequestError(res, 'Error deleting sandbox template')
   return
 }
 
@@ -49,7 +49,7 @@ export const deleteCommand = new commander.Command('delete')
     `specify ${asBold('[template]')} to delete it. If you dont specify ${asBold(
       '[template]'
     )} the command will try to delete sandbox template defined by ${asLocal(
-      'e2b.toml'
+      'grotte.toml'
     )}.`
   )
   .addOption(pathOption)
@@ -74,7 +74,7 @@ export const deleteCommand = new commander.Command('delete')
 
         const root = getRoot(opts.path)
 
-        const templates: (Pick<E2BConfig, 'template_id'> & {
+        const templates: (Pick<GrotteConfig, 'template_id'> & {
           configPath?: string
         })[] = []
 

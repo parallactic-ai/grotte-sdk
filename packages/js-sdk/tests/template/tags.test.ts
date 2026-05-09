@@ -126,7 +126,7 @@ describe('Template tags unit tests', () => {
 buildTemplateTest.skipIf(isDebug)(
   'build template with tags, assign and delete',
   async ({ buildTemplate }) => {
-    const templateName = 'e2b-tags-test'
+    const templateName = 'grotte-tags-test'
     const initialTag = `${templateName}:v1-${randomUUID()}`
 
     // Build a template with initial tag
@@ -152,7 +152,7 @@ buildTemplateTest.skipIf(isDebug)(
 buildTemplateTest.skipIf(isDebug)(
   'assign single tag to existing template',
   async ({ buildTemplate }) => {
-    const templateName = 'e2b-tags-test'
+    const templateName = 'grotte-tags-test'
     const initialTag = `${templateName}:v1-${randomUUID()}`
 
     const template = Template().fromBaseImage()
@@ -170,7 +170,7 @@ buildTemplateTest.skipIf(isDebug)(
 buildTemplateTest.skipIf(isDebug)(
   'rejects invalid tag format - missing alias',
   async ({ buildTemplate }) => {
-    const templateName = 'e2b-tags-test'
+    const templateName = 'grotte-tags-test'
     const initialTag = `${templateName}:v1-${randomUUID()}`
 
     const template = Template().fromBaseImage()
@@ -187,7 +187,7 @@ buildTemplateTest.skipIf(isDebug)(
 buildTemplateTest.skipIf(isDebug)(
   'rejects invalid tag format - missing tag',
   async ({ buildTemplate }) => {
-    const templateName = 'e2b-tags-test'
+    const templateName = 'grotte-tags-test'
     const initialTag = `${templateName}:v1-${randomUUID()}`
 
     const template = Template().fromBaseImage()

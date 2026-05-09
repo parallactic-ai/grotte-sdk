@@ -1,4 +1,4 @@
-from e2b.sandbox.filesystem.filesystem import WriteEntry
+from grotte.sandbox.filesystem.filesystem import WriteEntry
 
 
 def test_write_and_read_with_gzip(sandbox, debug):

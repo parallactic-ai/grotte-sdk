@@ -1,6 +1,6 @@
 import pytest
 
-from e2b import AsyncSandbox
+from grotte import AsyncSandbox
 
 
 async def test_command_envs(async_sandbox: AsyncSandbox):

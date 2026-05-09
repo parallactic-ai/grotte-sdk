@@ -1,23 +1,23 @@
 import * as boxen from 'boxen'
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 
 import { getUserConfig, UserConfig } from './user'
 import { asBold, asPrimary } from './utils/format'
 
-export let apiKey = process.env.E2B_API_KEY
-export let accessToken = process.env.E2B_ACCESS_TOKEN
-export const teamId = process.env.E2B_TEAM_ID
+export let apiKey = process.env.GROTTE_API_KEY
+export let accessToken = process.env.GROTTE_ACCESS_TOKEN
+export const teamId = process.env.GROTTE_TEAM_ID
 
 const authErrorBox = (keyName: string) => {
   let link
   let msg
   switch (keyName) {
-    case 'E2B_API_KEY':
-      link = 'https://e2b.dev/dashboard?tab=keys'
+    case 'GROTTE_API_KEY':
+      link = 'https://grotte.parallactic.fr/dashboard?tab=keys'
       msg = 'API key'
       break
-    case 'E2B_ACCESS_TOKEN':
-      link = 'https://e2b.dev/dashboard?tab=personal'
+    case 'GROTTE_ACCESS_TOKEN':
+      link = 'https://grotte.parallactic.fr/dashboard?tab=personal'
       msg = 'access token'
       break
   }
@@ -27,7 +27,7 @@ const authErrorBox = (keyName: string) => {
     throw new Error(`Unknown key name: ${keyName}`)
   }
   return boxen.default(
-    `You must be logged in to use this command. Run ${asBold('e2b auth login')}.
+    `You must be logged in to use this command. Run ${asBold('grotte auth login')}.
 
 If you are seeing this message in CI/CD you may need to set the ${asBold(
       `${keyName}`
@@ -52,7 +52,7 @@ export function ensureAPIKey() {
   }
 
   if (!apiKey) {
-    console.error(authErrorBox('E2B_API_KEY'))
+    console.error(authErrorBox('GROTTE_API_KEY'))
     process.exit(1)
   } else {
     return apiKey
@@ -62,7 +62,7 @@ export function ensureAPIKey() {
 export function ensureUserConfig(): UserConfig {
   const userConfig = getUserConfig()
   if (!userConfig) {
-    console.error('No user config found, run `e2b auth login` to log in first.')
+    console.error('No user config found, run `grotte auth login` to log in first.')
     process.exit(1)
   }
   return userConfig
@@ -76,7 +76,7 @@ export function ensureAccessToken() {
   }
 
   if (!accessToken) {
-    console.error(authErrorBox('E2B_ACCESS_TOKEN'))
+    console.error(authErrorBox('GROTTE_ACCESS_TOKEN'))
     process.exit(1)
   } else {
     return accessToken
@@ -86,9 +86,9 @@ export function ensureAccessToken() {
 /**
  * Resolve team ID with proper precedence:
  * 1. CLI --team flag
- * 2. E2B_TEAM_ID env var
- * 3. Local e2b.toml team_id (if provided)
- * 4. ~/.e2b/config.json teamId (only if E2B_API_KEY env var is NOT set,
+ * 2. GROTTE_TEAM_ID env var
+ * 3. Local grotte.toml team_id (if provided)
+ * 4. ~/.grotte/config.json teamId (only if GROTTE_API_KEY env var is NOT set,
  *    to avoid mismatch between env var API key and config file team ID)
  */
 export function resolveTeamId(
@@ -98,7 +98,7 @@ export function resolveTeamId(
   if (cliTeamId) return cliTeamId
   if (teamId) return teamId
   if (localConfigTeamId) return localConfigTeamId
-  if (!process.env.E2B_API_KEY) {
+  if (!process.env.GROTTE_API_KEY) {
     const config = getUserConfig()
     return config?.teamId
   }
@@ -107,8 +107,8 @@ export function resolveTeamId(
 
 const userConfig = getUserConfig()
 
-export const connectionConfig = new e2b.ConnectionConfig({
-  accessToken: process.env.E2B_ACCESS_TOKEN || userConfig?.accessToken,
-  apiKey: process.env.E2B_API_KEY || userConfig?.teamApiKey,
+export const connectionConfig = new grotte.ConnectionConfig({
+  accessToken: process.env.GROTTE_ACCESS_TOKEN || userConfig?.accessToken,
+  apiKey: process.env.GROTTE_API_KEY || userConfig?.teamApiKey,
 })
-export const client = new e2b.ApiClient(connectionConfig)
+export const client = new grotte.ApiClient(connectionConfig)

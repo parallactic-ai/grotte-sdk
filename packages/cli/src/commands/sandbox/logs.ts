@@ -1,12 +1,12 @@
 import * as commander from 'commander'
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 import * as util from 'util'
 import * as chalk from 'chalk'
 
 import { client, connectionConfig } from 'src/api'
 import { asBold, asTimestamp, withUnderline } from 'src/utils/format'
 import { wait } from 'src/utils/wait'
-import { handleE2BRequestError } from '../../utils/errors'
+import { handleGrotteRequestError } from '../../utils/errors'
 import { waitForSandboxEnd, formatEnum, Format, isRunning } from './utils'
 
 enum LogLevel {
@@ -245,7 +245,7 @@ export async function listSandboxLogs({
 }: {
   sandboxID: string
   start?: number
-}): Promise<e2b.components['schemas']['SandboxLog'][]> {
+}): Promise<grotte.components['schemas']['SandboxLog'][]> {
   const signal = connectionConfig.getSignal()
   const res = await client.api.GET('/sandboxes/{sandboxID}/logs', {
     signal,
@@ -259,7 +259,7 @@ export async function listSandboxLogs({
     },
   })
 
-  handleE2BRequestError(res, 'Error while getting sandbox logs')
+  handleGrotteRequestError(res, 'Error while getting sandbox logs')
 
   return res.data.logs
 }

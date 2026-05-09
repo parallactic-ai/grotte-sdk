@@ -2,12 +2,12 @@ import { randomBytes } from 'node:crypto'
 import { spawn } from 'node:child_process'
 import path from 'node:path'
 import { describe, expect, test } from 'vitest'
-import { Sandbox } from 'e2b'
+import { Sandbox } from 'grotte'
 import { getUserConfig } from 'src/user'
 
 type UserConfigWithDomain = NonNullable<ReturnType<typeof getUserConfig>> & {
   domain?: string
-  E2B_DOMAIN?: string
+  GROTTE_DOMAIN?: string
 }
 
 type PipeCase = {
@@ -26,29 +26,29 @@ type ExecResult = {
 
 const userConfig = safeGetUserConfig() as UserConfigWithDomain | null
 const domain =
-  process.env.E2B_DOMAIN ||
-  userConfig?.E2B_DOMAIN ||
+  process.env.GROTTE_DOMAIN ||
+  userConfig?.GROTTE_DOMAIN ||
   userConfig?.domain ||
-  'e2b.app'
-const apiKey = process.env.E2B_API_KEY || userConfig?.teamApiKey
+  'grotte.parallactic.fr'
+const apiKey = process.env.GROTTE_API_KEY || userConfig?.teamApiKey
 const templateId =
-  process.env.E2B_PIPE_TEMPLATE_ID ||
-  process.env.E2B_TEMPLATE_ID ||
+  process.env.GROTTE_PIPE_TEMPLATE_ID ||
+  process.env.GROTTE_TEMPLATE_ID ||
   'base'
-const isDebug = process.env.E2B_DEBUG !== undefined
+const isDebug = process.env.GROTTE_DEBUG !== undefined
 const hasCreds = Boolean(apiKey)
 const shouldSkip = !hasCreds || isDebug
 const testIf = test.skipIf(shouldSkip)
 const includeLargeBinary =
-  process.env.E2B_PIPE_INTEGRATION_STRICT === '1' ||
-  process.env.E2B_PIPE_INTEGRATION_BINARY === '1' ||
-  process.env.E2B_PIPE_SMOKE_STRICT === '1' || // Backward compatibility.
-  process.env.E2B_PIPE_SMOKE_BINARY === '1' || // Backward compatibility.
+  process.env.GROTTE_PIPE_INTEGRATION_STRICT === '1' ||
+  process.env.GROTTE_PIPE_INTEGRATION_BINARY === '1' ||
+  process.env.GROTTE_PIPE_SMOKE_STRICT === '1' || // Backward compatibility.
+  process.env.GROTTE_PIPE_SMOKE_BINARY === '1' || // Backward compatibility.
   process.env.STRICT === '1'
-const sandboxTimeoutMs = parseEnvInt('E2B_PIPE_SANDBOX_TIMEOUT_MS', 10_000)
-const testTimeoutMs = parseEnvInt('E2B_PIPE_TEST_TIMEOUT_MS', 60_000)
+const sandboxTimeoutMs = parseEnvInt('GROTTE_PIPE_SANDBOX_TIMEOUT_MS', 10_000)
+const testTimeoutMs = parseEnvInt('GROTTE_PIPE_TEST_TIMEOUT_MS', 60_000)
 const defaultCmdTimeoutMs = parseEnvInt(
-  'E2B_PIPE_CMD_TIMEOUT_MS',
+  'GROTTE_PIPE_CMD_TIMEOUT_MS',
   Math.min(8_000, testTimeoutMs)
 )
 
@@ -170,10 +170,10 @@ function runExecPipe(
 
   const env: NodeJS.ProcessEnv = {
     ...process.env,
-    E2B_DOMAIN: domain,
-    E2B_API_KEY: apiKey,
+    GROTTE_DOMAIN: domain,
+    GROTTE_API_KEY: apiKey,
   }
-  delete env.E2B_DEBUG
+  delete env.GROTTE_DEBUG
 
   return new Promise((resolve) => {
     const child = spawn('node', cliArgs, {
@@ -253,7 +253,7 @@ function safeGetUserConfig(): ReturnType<typeof getUserConfig> | null {
   try {
     return getUserConfig()
   } catch (err) {
-    console.warn(`Failed to read ~/.e2b/config.json: ${String(err)}`)
+    console.warn(`Failed to read ~/.grotte/config.json: ${String(err)}`)
     return null
   }
 }

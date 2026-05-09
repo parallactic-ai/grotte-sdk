@@ -1,6 +1,6 @@
 import pytest
-from e2b.exceptions import FileNotFoundException
-from e2b import Sandbox, FileType
+from grotte.exceptions import FileNotFoundException
+from grotte import Sandbox, FileType
 
 
 def test_get_info_of_file(sandbox: Sandbox):

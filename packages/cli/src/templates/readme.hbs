@@ -1,28 +1,28 @@
-# {{name}} - E2B Sandbox Template
+# {{name}} - GROTTE Sandbox Template
 
-This is an E2B sandbox template that allows you to run code in a controlled environment.
+This is an GROTTE sandbox template that allows you to run code in a controlled environment.
 
 ## Prerequisites
 
 Before you begin, make sure you have:
-- An E2B account (sign up at [e2b.dev](https://e2b.dev))
-- Your E2B API key (get it from your [E2B dashboard](https://e2b.dev/dashboard))
+- An GROTTE account (sign up at [grotte.parallactic.fr](https://grotte.parallactic.fr))
+- Your GROTTE API key (get it from your [GROTTE dashboard](https://grotte.parallactic.fr/dashboard))
 {{#if isTypeScript}}- Node.js and npm/yarn (or similar) installed{{else if isPython}}- Python installed{{/if}}
 
 ## Configuration
 
 1. Create a `.env` file in your project root or set the environment variable:
    ```
-   E2B_API_KEY=your_api_key_here
+   GROTTE_API_KEY=your_api_key_here
    ```
 
 ## Installing Dependencies
 
 ```bash
 {{#if isTypeScript}}
-npm install e2b
+npm install grotte
 {{else if isPython}}
-pip install e2b
+pip install grotte
 {{/if}}
 ```
 
@@ -31,26 +31,26 @@ pip install e2b
 ```bash
 {{#if isTypeScript}}
 # For development
-npm run e2b:build:dev
+npm run grotte:build:dev
 
 # For production
-npm run e2b:build:prod
+npm run grotte:build:prod
 {{else if isPython}}
 # For development
-make e2b:build:dev
+make grotte:build:dev
 
 # For production
-make e2b:build:prod
+make grotte:build:prod
 {{/if}}
 ```
 
 ## Using the Template in a Sandbox
 
-Once your template is built, you can use it in your E2B sandbox:
+Once your template is built, you can use it in your GROTTE sandbox:
 
 {{#if isTypeScript}}
 ```typescript
-import { Sandbox } from 'e2b'
+import { Sandbox } from 'grotte'
 
 // Create a new sandbox instance
 const sandbox = await Sandbox.create('{{name}}')
@@ -60,7 +60,7 @@ console.log('Sandbox created successfully')
 ```
 {{else if isPythonSync}}
 ```python
-from e2b import Sandbox
+from grotte import Sandbox
 
 # Create a new sandbox instance
 sandbox = Sandbox.create('{{name}}')
@@ -70,7 +70,7 @@ print('Sandbox created successfully')
 ```
 {{else if isPythonAsync}}
 ```python
-from e2b import AsyncSandbox
+from grotte import AsyncSandbox
 import asyncio
 
 async def main():
@@ -95,5 +95,5 @@ asyncio.run(main())
 
 1. Customize the template in `{{templateFile}}` to fit your needs
 2. Build the template using one of the methods above
-3. Use the template in your E2B sandbox code
-4. Check out the [E2B documentation](https://e2b.dev/docs) for more advanced usage
+3. Use the template in your GROTTE sandbox code
+4. Check out the [GROTTE documentation](https://grotte.parallactic.fr/docs) for more advanced usage

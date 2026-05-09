@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "e2b"
+name = "grotte"
 version = "2.21.0"
-description = "E2B SDK that give agents cloud environments"
-authors = ["e2b <hello@e2b.dev>"]
+description = "GROTTE SDK that give agents cloud environments"
+authors = ["grotte <hello@grotte.parallactic.fr>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://e2b.dev/"
-repository = "https://github.com/e2b-dev/e2b/tree/main/packages/python-sdk"
-packages = [{ include = "e2b" }, { include = "e2b_connect" }]
+homepage = "https://grotte.parallactic.fr/"
+repository = "https://github.com/parallactic-ai/grotte-sdk/tree/main/packages/python-sdk"
+packages = [{ include = "grotte" }, { include = "grt_connect" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -40,7 +40,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/e2b-dev/e2b/issues"
+"Bug Tracker" = "https://github.com/parallactic-ai/grotte-sdk/issues"
 
 [tool.basedpyright]
 reportInconsistentOverload = false
@@ -50,18 +50,18 @@ invalid-overload = "ignore"
 no-matching-overload = "ignore"
 
 [[tool.ty.overrides]]
-include = ["e2b/api/client/models/**"]
+include = ["grotte/api/client/models/**"]
 rules = { invalid-argument-type = "ignore" }
 
 [[tool.ty.overrides]]
-include = ["e2b/envd/**/*.pyi"]
+include = ["grotte/envd/**/*.pyi"]
 rules = { conflicting-metaclass = "ignore", unresolved-attribute = "ignore" }
 
 [[tool.ty.overrides]]
-include = ["e2b/volume/**"]
+include = ["grotte/volume/**"]
 rules = { unresolved-attribute = "ignore" }
 
 [tool.ruff]
 exclude = [
-    "e2b/envd/filesystem/filesystem_pb2.py"
+    "grotte/envd/filesystem/filesystem_pb2.py"
 ]

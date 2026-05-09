@@ -6,10 +6,10 @@ from uuid import uuid4
 import pytest
 import linecache
 
-from e2b import AsyncTemplate, CopyItem, wait_for_timeout
-from e2b.template.types import TemplateBuildStatus
-import e2b.template_async.main as template_async_main
-import e2b.template_async.build_api as build_api_mod
+from grotte import AsyncTemplate, CopyItem, wait_for_timeout
+from grotte.template.types import TemplateBuildStatus
+import grotte.template_async.main as template_async_main
+import grotte.template_async.build_api as build_api_mod
 
 non_existent_path = "nonexistent/path"
 
@@ -94,7 +94,7 @@ async def _expect_to_throw_and_check_trace(func, expected_method: str):
 
 @pytest.mark.skip_debug()
 async def test_traces_on_from_image(async_build):
-    template = AsyncTemplate().from_image("e2b.dev/this-image-does-not-exist")
+    template = AsyncTemplate().from_image("grotte.parallactic.fr/this-image-does-not-exist")
     await _expect_to_throw_and_check_trace(
         lambda: async_build(template, name="from_image", skip_cache=True), "from_image"
     )

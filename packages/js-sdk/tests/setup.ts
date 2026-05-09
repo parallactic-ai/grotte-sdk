@@ -34,7 +34,7 @@ async function buildTemplate(
   options?: { name?: string; skipCache?: boolean },
   onBuildLogs?: (logEntry: LogEntry) => void
 ): Promise<BuildInfo> {
-  const buildName = options?.name || `e2b-test-${generateRandomString()}`
+  const buildName = options?.name || `grotte-test-${generateRandomString()}`
   const buildInfo: { templateId?: string; buildId?: string } = {}
 
   const captureLogs = (log: LogEntry) => {
@@ -137,8 +137,8 @@ export const volumeTest = base.extend<VolumeFixture>({
   ],
 })
 
-export const isDebug = process.env.E2B_DEBUG !== undefined
-export const isIntegrationTest = process.env.E2B_INTEGRATION_TEST !== undefined
+export const isDebug = process.env.GROTTE_DEBUG !== undefined
+export const isIntegrationTest = process.env.GROTTE_INTEGRATION_TEST !== undefined
 
 function generateRandomString(length: number = 8): string {
   return Math.random()
@@ -151,11 +151,11 @@ export async function wait(ms: number) {
 }
 
 /**
- * Returns the API URL for the given path, using E2B_DOMAIN env var.
+ * Returns the API URL for the given path, using GROTTE_DOMAIN env var.
  * Supports msw path parameters like :templateID
  */
 export function apiUrl(path: string): string {
-  const domain = process.env.E2B_DOMAIN || 'e2b.app'
+  const domain = process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'
   return `https://api.${domain}${path}`
 }
 

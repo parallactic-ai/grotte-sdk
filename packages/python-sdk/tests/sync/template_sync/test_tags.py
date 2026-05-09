@@ -4,9 +4,9 @@ from unittest.mock import Mock
 
 import pytest
 
-from e2b import TemplateTag, TemplateTagInfo, Template
-from e2b.exceptions import TemplateException
-import e2b.template_sync.main as template_sync_main
+from grotte import TemplateTag, TemplateTagInfo, Template
+from grotte.exceptions import TemplateException
+import grotte.template_sync.main as template_sync_main
 
 
 class TestAssignTags:
@@ -167,7 +167,7 @@ class TestTagsIntegration:
     @pytest.mark.skip_debug()
     def test_build_template_with_tags_assign_and_delete(self, build):
         """Test building a template with tags, assigning new tags, and deleting."""
-        template_name = "e2b-tags-test"
+        template_name = "grotte-tags-test"
         initial_tag = f"{template_name}:v1-{uuid.uuid4().hex}"
 
         # Build a template with initial tag
@@ -188,7 +188,7 @@ class TestTagsIntegration:
     @pytest.mark.skip_debug()
     def test_assign_single_tag_to_existing_template(self, build):
         """Test assigning a single tag (not array) to an existing template."""
-        template_name = "e2b-tags-test"
+        template_name = "grotte-tags-test"
         initial_tag = f"{template_name}:v1-{uuid.uuid4().hex}"
 
         template = Template().from_base_image()
@@ -204,7 +204,7 @@ class TestTagsIntegration:
     @pytest.mark.skip_debug()
     def test_rejects_invalid_tag_format_missing_alias(self, build):
         """Test that tag without alias (starts with colon) is rejected."""
-        template_name = "e2b-tags-test"
+        template_name = "grotte-tags-test"
         initial_tag = f"{template_name}:v1-{uuid.uuid4().hex}"
 
         template = Template().from_base_image()
@@ -217,7 +217,7 @@ class TestTagsIntegration:
     @pytest.mark.skip_debug()
     def test_rejects_invalid_tag_format_missing_tag(self, build):
         """Test that tag without tag portion (ends with colon) is rejected."""
-        template_name = "e2b-tags-test"
+        template_name = "grotte-tags-test"
         initial_tag = f"{template_name}:v1-{uuid.uuid4().hex}"
 
         template = Template().from_base_image()

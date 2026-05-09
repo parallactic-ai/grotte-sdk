@@ -1,10 +1,10 @@
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 import * as chalk from 'chalk'
 
 import { asFormattedSandboxTemplate } from 'src/utils/format'
 
 export async function getPromptTemplates(
-  templates: e2b.components['schemas']['Template'][],
+  templates: grotte.components['schemas']['Template'][],
   text: string
 ) {
   const inquirer = await import('inquirer')
@@ -23,5 +23,5 @@ export async function getPromptTemplates(
 
   return templatesAnswers[
     'templates'
-  ] as e2b.components['schemas']['Template'][]
+  ] as grotte.components['schemas']['Template'][]
 }

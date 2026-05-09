@@ -3,14 +3,14 @@ from uuid import uuid4
 
 import pytest
 
-from e2b import AsyncVolume
-from e2b.exceptions import NotFoundException
-from e2b.api.client.models.volume_and_token import VolumeAndToken
-from e2b.api.client.types import Response
-import e2b.api.client.api.volumes.post_volumes as post_volumes_mod
-import e2b.api.client.api.volumes.get_volumes as get_volumes_mod
-import e2b.api.client.api.volumes.get_volumes_volume_id as get_volume_mod
-import e2b.api.client.api.volumes.delete_volumes_volume_id as delete_volume_mod
+from grotte import AsyncVolume
+from grotte.exceptions import NotFoundException
+from grotte.api.client.models.volume_and_token import VolumeAndToken
+from grotte.api.client.types import Response
+import grotte.api.client.api.volumes.post_volumes as post_volumes_mod
+import grotte.api.client.api.volumes.get_volumes as get_volumes_mod
+import grotte.api.client.api.volumes.get_volumes_volume_id as get_volume_mod
+import grotte.api.client.api.volumes.delete_volumes_volume_id as delete_volume_mod
 
 # In-memory store for mock volumes
 _volumes: dict[str, VolumeAndToken] = {}
@@ -18,7 +18,7 @@ _volumes: dict[str, VolumeAndToken] = {}
 
 @pytest.fixture(autouse=True)
 def mock_volume_api(monkeypatch):
-    monkeypatch.setenv("E2B_API_KEY", "test-api-key")
+    monkeypatch.setenv("GROTTE_API_KEY", "test-api-key")
     _volumes.clear()
 
     async def mock_post_volumes(*, client, body):

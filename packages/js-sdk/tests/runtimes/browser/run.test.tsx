@@ -13,8 +13,8 @@ function E2BTest() {
   useEffect(() => {
     const getText = async () => {
       const sandbox = await Sandbox.create(template, {
-        apiKey: inject('E2B_API_KEY'),
-        domain: inject('E2B_DOMAIN'),
+        apiKey: inject('GROTTE_API_KEY'),
+        domain: inject('GROTTE_DOMAIN'),
       })
 
       try {

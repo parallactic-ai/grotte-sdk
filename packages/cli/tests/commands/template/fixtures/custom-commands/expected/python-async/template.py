@@ -1,4 +1,4 @@
-from e2b import AsyncTemplate
+from grotte import AsyncTemplate
 
 template = (
     AsyncTemplate()

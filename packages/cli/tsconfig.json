@@ -25,7 +25,7 @@
     "baseUrl": ".",
     "rootDirs": ["src"],
     "paths": {
-      "e2b": ["../js-sdk/src"]
+      "grotte": ["../js-sdk/src"]
     }
   }
 }

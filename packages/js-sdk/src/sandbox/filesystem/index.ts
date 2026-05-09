@@ -785,7 +785,7 @@ export class Filesystem {
     ) {
       throw new TemplateError(
         'You need to update the template to use recursive watching. ' +
-          'You can do this by running `e2b template build` in the directory with the template.'
+          'You can do this by running `grotte template build` in the directory with the template.'
       )
     }
 

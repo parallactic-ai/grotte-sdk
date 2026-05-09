@@ -35,7 +35,7 @@ jobs:
       - name: Build and push
         run: |
           docker buildx build \
-            --file e2b.Dockerfile \
+            --file grotte.Dockerfile \
             --platform linux/amd64,linux/arm64 \
             --push \
             --tag ${{ secrets.DOCKERHUB_USERNAME }}/base:latest .

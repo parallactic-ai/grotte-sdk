@@ -3,12 +3,12 @@ name: Test CLI
 on:
   workflow_call:
     inputs:
-      E2B_DOMAIN:
+      GROTTE_DOMAIN:
         required: false
         type: string
         default: ''
     secrets:
-      E2B_API_KEY:
+      GROTTE_API_KEY:
         required: true
 
 permissions:
@@ -68,5 +68,5 @@ jobs:
         run: pnpm test
         working-directory: ./packages/cli
         env:
-          E2B_API_KEY: ${{ secrets.E2B_API_KEY }}
-          E2B_DOMAIN: ${{ inputs.E2B_DOMAIN }}
+          GROTTE_API_KEY: ${{ secrets.GROTTE_API_KEY }}
+          GROTTE_DOMAIN: ${{ inputs.GROTTE_DOMAIN }}

@@ -1,7 +1,7 @@
 import inspect
 
-from e2b.sandbox_async.git import Git as AsyncGit
-from e2b.sandbox_sync.git import Git as SyncGit
+from grotte.sandbox_async.git import Git as AsyncGit
+from grotte.sandbox_sync.git import Git as SyncGit
 
 
 def _public_methods(cls):

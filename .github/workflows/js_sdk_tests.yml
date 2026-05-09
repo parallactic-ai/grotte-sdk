@@ -3,12 +3,12 @@ name: Test JS SDK
 on:
   workflow_call:
     inputs:
-      E2B_DOMAIN:
+      GROTTE_DOMAIN:
         required: false
         type: string
         default: ''
     secrets:
-      E2B_API_KEY:
+      GROTTE_API_KEY:
         required: true
 
 permissions:
@@ -84,8 +84,8 @@ jobs:
       - name: Run Node tests
         run: pnpm test
         env:
-          E2B_API_KEY: ${{ secrets.E2B_API_KEY }}
-          E2B_DOMAIN: ${{ inputs.E2B_DOMAIN }}
+          GROTTE_API_KEY: ${{ secrets.GROTTE_API_KEY }}
+          GROTTE_DOMAIN: ${{ inputs.GROTTE_DOMAIN }}
 
       - name: Install Bun
         uses: oven-sh/setup-bun@v2
@@ -93,8 +93,8 @@ jobs:
       - name: Run Bun tests
         run: pnpm test:bun
         env:
-          E2B_API_KEY: ${{ secrets.E2B_API_KEY }}
-          E2B_DOMAIN: ${{ inputs.E2B_DOMAIN }}
+          GROTTE_API_KEY: ${{ secrets.GROTTE_API_KEY }}
+          GROTTE_DOMAIN: ${{ inputs.GROTTE_DOMAIN }}
 
       - name: Install Deno
         uses: denoland/setup-deno@v1
@@ -104,5 +104,5 @@ jobs:
       - name: Run Deno tests
         run: pnpm test:deno
         env:
-          E2B_API_KEY: ${{ secrets.E2B_API_KEY }}
-          E2B_DOMAIN: ${{ inputs.E2B_DOMAIN }}
+          GROTTE_API_KEY: ${{ secrets.GROTTE_API_KEY }}
+          GROTTE_DOMAIN: ${{ inputs.GROTTE_DOMAIN }}

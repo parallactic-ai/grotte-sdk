@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from e2b import AsyncTemplate, wait_for_timeout
+from grotte import AsyncTemplate, wait_for_timeout
 
 
 @pytest.mark.skip_debug()
@@ -17,7 +17,7 @@ async def test_build_in_background_should_start_build_and_return_info():
         .set_start_cmd('echo "Hello"', wait_for_timeout(10_000))
     )
 
-    name = f"e2b-test:v1-{uuid.uuid4()}"
+    name = f"grotte-test:v1-{uuid.uuid4()}"
 
     build_info = await AsyncTemplate.build_in_background(
         template,

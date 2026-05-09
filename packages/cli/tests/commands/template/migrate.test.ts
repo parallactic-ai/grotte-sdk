@@ -39,7 +39,7 @@ describe('Template Migration', () => {
 
   beforeEach(async () => {
     // Use Node.js built-in temp directory handling
-    testDir = await fs.mkdtemp('e2b-migrate-test-')
+    testDir = await fs.mkdtemp('grotte-migrate-test-')
   })
 
   afterEach(async () => {
@@ -127,8 +127,8 @@ describe('Template Migration', () => {
       expect(buildProdFile.trim()).toEqual(expectedBuildProd.trim())
 
       // Check that old files are renamed to .old extensions
-      const oldDockerfilePath = path.join(testDir, 'e2b.Dockerfile.old')
-      const oldConfigPath = path.join(testDir, 'e2b.toml.old')
+      const oldDockerfilePath = path.join(testDir, 'grotte.Dockerfile.old')
+      const oldConfigPath = path.join(testDir, 'grotte.toml.old')
 
       expect(
         await fs
@@ -144,8 +144,8 @@ describe('Template Migration', () => {
       ).toBe(true)
 
       // Verify original files no longer exist
-      const originalDockerfilePath = path.join(testDir, 'e2b.Dockerfile')
-      const originalConfigPath = path.join(testDir, 'e2b.toml')
+      const originalDockerfilePath = path.join(testDir, 'grotte.Dockerfile')
+      const originalConfigPath = path.join(testDir, 'grotte.toml')
 
       expect(
         await fs
@@ -164,12 +164,12 @@ describe('Template Migration', () => {
     async function copyFixtureFiles(fixtureDir: string, targetDir: string) {
       // Copy Dockerfile and config
       await fs.copyFile(
-        path.join(fixtureDir, 'e2b.Dockerfile'),
-        path.join(targetDir, 'e2b.Dockerfile')
+        path.join(fixtureDir, 'grotte.Dockerfile'),
+        path.join(targetDir, 'grotte.Dockerfile')
       )
       await fs.copyFile(
-        path.join(fixtureDir, 'e2b.toml'),
-        path.join(targetDir, 'e2b.toml')
+        path.join(fixtureDir, 'grotte.toml'),
+        path.join(targetDir, 'grotte.toml')
       )
     }
   })
@@ -178,7 +178,7 @@ describe('Template Migration', () => {
     test('should succeed with warning when config file is missing', async () => {
       // Create only Dockerfile, no config
       const dockerfile = 'FROM node:18'
-      await fs.writeFile(path.join(testDir, 'e2b.Dockerfile'), dockerfile)
+      await fs.writeFile(path.join(testDir, 'grotte.Dockerfile'), dockerfile)
 
       // Run migration and expect it to succeed with warning (capture stderr + stdout)
       const output = execSync(
@@ -190,7 +190,7 @@ describe('Template Migration', () => {
       )
 
       expect(output).toContain(
-        'Config file ./e2b.toml not found. Using defaults.'
+        'Config file ./grotte.toml not found. Using defaults.'
       )
       expect(output).toContain('Migration completed successfully')
     })
@@ -198,8 +198,8 @@ describe('Template Migration', () => {
     test('should fail gracefully when Dockerfile is missing', async () => {
       // Create only config, no Dockerfile
       const config = `template_id = "test-app"
-dockerfile = "e2b.Dockerfile"`
-      await fs.writeFile(path.join(testDir, 'e2b.toml'), config)
+dockerfile = "grotte.Dockerfile"`
+      await fs.writeFile(path.join(testDir, 'grotte.toml'), config)
 
       // Run migration and expect it to fail
       expect(() => {
@@ -214,12 +214,12 @@ dockerfile = "e2b.Dockerfile"`
     test('should error out if files already exist', async () => {
       // Create test Dockerfile
       const dockerfile = 'FROM node:18'
-      await fs.writeFile(path.join(testDir, 'e2b.Dockerfile'), dockerfile)
+      await fs.writeFile(path.join(testDir, 'grotte.Dockerfile'), dockerfile)
 
       // Create test config
       const config = `template_id = "test-app"
-dockerfile = "e2b.Dockerfile"`
-      await fs.writeFile(path.join(testDir, 'e2b.toml'), config)
+dockerfile = "grotte.Dockerfile"`
+      await fs.writeFile(path.join(testDir, 'grotte.toml'), config)
 
       // Create existing files
       await fs.writeFile(path.join(testDir, 'template.ts'), '// existing')

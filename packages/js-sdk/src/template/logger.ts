@@ -193,7 +193,7 @@ class DefaultBuildLogger {
  *
  * @example
  * ```ts
- * import { Template, defaultBuildLogger } from 'e2b'
+ * import { Template, defaultBuildLogger } from 'grotte'
  *
  * const template = Template().fromPythonImage()
  *

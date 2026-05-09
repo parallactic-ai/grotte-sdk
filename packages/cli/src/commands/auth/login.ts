@@ -4,7 +4,7 @@ import * as fs from 'fs'
 import * as http from 'http'
 import * as open from 'open'
 import * as path from 'path'
-import * as e2b from 'e2b'
+import * as grotte from 'grotte'
 
 import { pkg } from 'src'
 import {
@@ -15,11 +15,15 @@ import {
 } from 'src/user'
 import { asBold, asFormattedConfig, asFormattedError } from 'src/utils/format'
 import { connectionConfig } from 'src/api'
-import { handleE2BRequestError } from '../../utils/errors'
+import { handleGrotteRequestError } from '../../utils/errors'
 
 export const loginCommand = new commander.Command('login')
   .description('log in to CLI')
-  .action(async () => {
+  .option(
+    '--key <apiKey>',
+    'log in non-interactively with a team API key (grt_…). Sandbox-scoped commands work; template/team-management commands still require the browser flow.',
+  )
+  .action(async (opts: { key?: string }) => {
     let userConfig: UserConfig | null = null
 
     try {
@@ -27,11 +31,41 @@ export const loginCommand = new commander.Command('login')
     } catch (err) {
       console.error(asFormattedError('Failed to read user config', err))
     }
+
+    // --key short-circuit: the user already has a team API key (from
+    // the dashboard's NewKeyBanner) and just wants the CLI to use it.
+    // We skip the browser dance and write a partial config — fields the
+    // browser flow would have populated (accessToken, teamId, teamName)
+    // are left empty, which the api client treats as "API-key mode".
+    if (opts.key) {
+      if (!opts.key.startsWith('grt_')) {
+        console.error(
+          asFormattedError(
+            'Invalid key format — must start with grt_',
+          ),
+        )
+        process.exit(1)
+      }
+      userConfig = {
+        email: 'cli-api-key',
+        accessToken: '',
+        teamName: 'API Key',
+        teamId: '',
+        teamApiKey: opts.key,
+      }
+      fs.mkdirSync(path.dirname(USER_CONFIG_PATH), { recursive: true })
+      fs.writeFileSync(USER_CONFIG_PATH, JSON.stringify(userConfig, null, 2))
+      console.log(
+        `Logged in with team API key. Stored in ${asBold(USER_CONFIG_PATH)}`,
+      )
+      process.exit(0)
+    }
+
     if (userConfig) {
       console.log(
         `\nAlready logged in. ${asFormattedConfig(
           userConfig
-        )}.\n\nIf you want to log in as a different user, log out first by running 'e2b auth logout'.\nTo change the team, run 'e2b auth configure'.\n`
+        )}.\n\nIf you want to log in as a different user, log out first by running 'grotte auth logout'.\nTo change the team, run 'grotte auth configure'.\n`
       )
       return
     } else if (!userConfig) {
@@ -43,19 +77,19 @@ export const loginCommand = new commander.Command('login')
       }
 
       const accessToken =
-        process.env.E2B_ACCESS_TOKEN || signInResponse.accessToken
+        process.env.GROTTE_ACCESS_TOKEN || signInResponse.accessToken
 
       const signal = connectionConfig.getSignal()
-      const config = new e2b.ConnectionConfig({
+      const config = new grotte.ConnectionConfig({
         accessToken,
       })
-      const client = new e2b.ApiClient(config)
+      const client = new grotte.ApiClient(config)
       const res = await client.api.GET('/teams', { signal })
 
-      handleE2BRequestError(res, 'Error getting teams')
+      handleGrotteRequestError(res, 'Error getting teams')
 
       const defaultTeam = res.data.find(
-        (team: e2b.components['schemas']['Team']) => team.isDefault
+        (team: grotte.components['schemas']['Team']) => team.isDefault
       )
       if (!defaultTeam) {
         console.error(

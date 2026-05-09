@@ -1,16 +1,16 @@
 import status from 'statuses'
 
 /**
- * Thrown when a request to E2B API occurs.
+ * Thrown when a request to GROTTE API occurs.
  */
-export class E2BRequestError extends Error {
+export class GrotteRequestError extends Error {
   constructor(message: any) {
     super(message)
-    this.name = 'E2BRequestError'
+    this.name = 'GrotteRequestError'
   }
 }
 
-export function handleE2BRequestError<T>(
+export function handleGrotteRequestError<T>(
   res: {
     data?: T | null | undefined
     error?: { code: number; message: string }
@@ -44,7 +44,7 @@ export function handleE2BRequestError<T>(
       break
   }
 
-  throw new E2BRequestError(
+  throw new GrotteRequestError(
     `${errMsg && `${errMsg}: `}[${code}] ${message && `${message}: `}${
       res.error?.message ?? 'no message'
     }`
