@@ -12,7 +12,7 @@
   "bugs": "https://github.com/parallactic-ai/grotte-sdk/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/parallactic-ai/grotte-sdk",
+    "url": "git+https://github.com/parallactic-ai/grotte-sdk.git",
     "directory": "packages/js-sdk"
   },
   "publishConfig": {
