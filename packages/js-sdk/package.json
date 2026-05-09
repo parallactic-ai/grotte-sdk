@@ -70,6 +70,8 @@
   "files": [
     "dist",
     "README.md",
+    "LICENSE",
+    "NOTICE",
     "package.json"
   ],
   "keywords": [

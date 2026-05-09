@@ -1,0 +1,20 @@
+GROTTE JavaScript SDK
+Copyright 2026 Parallactic AI SAS
+
+This product is a fork of and is based on the E2B JavaScript SDK,
+originally developed by FoundryLabs, Inc.
+Copyright 2025 FoundryLabs, Inc.
+
+Licensed under the MIT License. See LICENSE for the full license text.
+
+Significant changes from the upstream E2B SDK:
+
+  - Renamed npm package: `e2b` → `grotte`
+  - Default API endpoint switched to https://api.grotte.parallactic.fr
+  - API key prefix: `e2b_` → `grt_`
+  - Environment variable prefix: `E2B_*` → `GROTTE_*`
+    (legacy `E2B_*` names accepted as fallbacks)
+  - Brand-string substitutions throughout user-facing output
+
+Source: https://github.com/Jesiel-dev-creator/grotte-sdk
+Upstream: https://github.com/e2b-dev/E2B

@@ -1,0 +1,22 @@
+GROTTE CLI
+Copyright 2026 Parallactic AI SAS
+
+This product is a fork of and is based on the E2B CLI,
+originally developed by FoundryLabs, Inc.
+Copyright 2025 FoundryLabs, Inc.
+
+Licensed under the MIT License. See LICENSE for the full license text.
+
+Significant changes from the upstream E2B CLI:
+
+  - Renamed npm package: `@e2b/cli` → `@grotte/cli`
+  - Renamed binary: `e2b` → `grotte`
+  - Default API endpoint switched to https://api.grotte.parallactic.fr
+  - Credentials moved to `~/.grotte/config.json`
+  - Added `grotte auth login --key grt_…` flag (was browser-only)
+  - Template config files renamed: `e2b.toml` → `grotte.toml`,
+    `e2b.Dockerfile` → `grotte.Dockerfile`
+  - Brand-string substitutions throughout user-facing output
+
+Source: https://github.com/Jesiel-dev-creator/grotte-sdk
+Upstream: https://github.com/e2b-dev/E2B

@@ -1,64 +1,83 @@
-<p align="center">
-  <img width="100" src="https://raw.githubusercontent.com/parallactic-ai/grotte-sdk/refs/heads/main/readme-assets/logo-circle.png" alt="grotte logo">
-</p>
+# GROTTE JavaScript SDK
 
-<h4 align="center">  
-  <a href="https://www.npmjs.com/package/grotte">
-    <img alt="Last 1 month downloads for the JavaScript SDK" loading="lazy" width="200" height="20" decoding="async" data-nimg="1"
-    style="color:transparent;width:auto;height:100%" src="https://img.shields.io/npm/dm/grotte?label=NPM%20Downloads">
-  </a>
-</h4>
+EU-sovereign code execution sandboxes for AI agents and developer
+workflows. Built by Parallactic AI SAS.
 
-<!---
-<img width="100%" src="/readme-assets/preview.png" alt="Cover image">
---->
-## What is GROTTE?
-[GROTTE](https://www.grotte.parallactic.fr/) is an open-source infrastructure that allows you to run AI-generated code in secure isolated sandboxes in the cloud. To start and control sandboxes, use our [JavaScript SDK](https://www.npmjs.com/package/grotte) or [Python SDK](https://pypi.org/project/grotte).
-
-## Run your first Sandbox
-
-### 1. Install SDK
+## Install
 
 ```bash
-npm i grotte
+npm install grotte
 ```
 
-### 2. Get your GROTTE API key
-1. Sign up to GROTTE [here](https://grotte.parallactic.fr).
-2. Get your API key [here](https://grotte.parallactic.fr/dashboard?tab=keys).
-3. Set environment variable with your API key
-```
-GROTTE_API_KEY=grt_***
-```
+## Quick start
 
-### 3. Start a sandbox and run commands
+```typescript
+import { Sandbox } from 'grotte'
 
-```ts
-import Sandbox from 'grotte'
-
-const sandbox = await Sandbox.create()
-const result = await sandbox.commands.run('echo "Hello from GROTTE!"')
-console.log(result.stdout) // Hello from GROTTE!
+const sbx = await Sandbox.create('base')
+const result = await sbx.commands.run('echo Hello GROTTE')
+console.log(result.stdout) // Hello GROTTE
+await sbx.kill()
 ```
 
-### 4. Code execution with Code Interpreter
+## Authentication
 
-If you need [`runCode()`](https://grotte.parallactic.fr/docs/code-interpreting), install the [Code Interpreter SDK](https://github.com/parallactic-ai/code-interpreter):
+Set your API key as an environment variable:
 
 ```bash
-npm i @grotte/code-interpreter
+export GROTTE_API_KEY=grt_your_key_here
 ```
 
-```ts
-import { Sandbox } from '@grotte/code-interpreter'
+Get your API key at [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr).
 
-const sandbox = await Sandbox.create()
-const execution = await sandbox.runCode('x = 1; x += 1; x')
-console.log(execution.text)  // outputs 2
+## API
+
+### Sandbox
+
+```typescript
+// Create a sandbox
+const sbx = await Sandbox.create(template?: string, opts?: SandboxOpts)
+
+// Run a command
+const result = await sbx.commands.run(cmd: string)
+// → result.stdout, result.stderr, result.exitCode
+
+// File operations
+await sbx.files.write(path: string, content: string)
+const content = await sbx.files.read(path: string)
+const files = await sbx.files.list(path: string)
+
+// Kill the sandbox
+await sbx.kill()
 ```
 
-### 5. Check docs
-Visit [GROTTE documentation](https://grotte.parallactic.fr/docs).
+### Templates
 
-### 6. GROTTE cookbook
-Visit our [Cookbook](https://github.com/parallactic-ai/grotte-sdk-cookbook/tree/main) to get inspired by examples with different LLMs and AI frameworks.
+Available sandbox environments:
+
+| Template     | Description                |
+| ------------ | -------------------------- |
+| `base`       | Ubuntu 22.04 + bash        |
+| `python-3.12`| Python 3.12 environment    |
+| `node-22`    | Node.js 22 environment     |
+
+## Configuration
+
+```typescript
+const sbx = await Sandbox.create('base', {
+  timeoutMs: 60_000,    // max sandbox lifetime
+  apiKey: 'grt_...',    // override env var
+})
+```
+
+## Links
+
+- Dashboard: [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr)
+- API:       [api.grotte.parallactic.fr](https://api.grotte.parallactic.fr)
+- Docs:      [parallactic.fr/docs](https://parallactic.fr/docs)
+- Contact:   [jesiel@parallactic.fr](mailto:jesiel@parallactic.fr)
+
+## License
+
+MIT · Based on [E2B SDK](https://github.com/e2b-dev/E2B) by FoundryLabs, Inc.
+See `NOTICE` for full attribution and a summary of significant changes.

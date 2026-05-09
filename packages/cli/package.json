@@ -65,7 +65,8 @@
   "files": [
     "dist",
     "LICENSE",
-    "README",
+    "NOTICE",
+    "README.md",
     "package.json"
   ],
   "bin": {
