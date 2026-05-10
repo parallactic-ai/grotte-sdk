@@ -5,8 +5,21 @@ The GROTTE Python + JavaScript SDK + CLI monorepo. Forked from
 `@grotte/cli` (npm) with the `grotte` binary, and `@grotte/python-sdk`
 (internal workspace name; PyPI is just `grotte`).
 
-Live: `npmjs.com/package/grotte`, `npmjs.com/package/@grotte/cli`,
-`pypi.org/project/grotte` (PyPI not yet published as of 2026-05-09).
+## Live (verified 2026-05-10 against api.grotte.parallactic.fr)
+
+| Registry | Package | Version | Notes |
+|---|---|---|---|
+| npm | `grotte` (JS SDK) | **0.1.1** | end-to-end smoke passes |
+| npm | `@grotte/cli` | **0.1.2** | bin: `grotte`. 0.1.0 deprecated for the workspace:* bug |
+| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.1** | end-to-end smoke passes |
+
+Sandbox-create lifecycle (create → run command → kill) verified clean
+across all three surfaces using the team's live API key. The `base`
+template is currently env `t8wm6m5fj6a7clourg73` — Ubuntu 22.04.5 with
+Python 3.10.12 + Node 20.20.2 + pandas/numpy/sklearn/flask/fastapi
+preinstalled (rebuilt 2026-05-10 to fix EIO rootfs corruption on the
+prior env `pxqastjs4dgsw731gabm`; details in
+`~/grotte/e2b-infra/iac/provider-scaleway/CLAUDE.md`).
 
 ## Daily commands
 
