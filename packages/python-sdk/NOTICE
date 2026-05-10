@@ -1,0 +1,23 @@
+GROTTE Python SDK
+Copyright 2026 Parallactic AI SAS
+
+This product is a fork of and is based on the E2B Python SDK,
+originally developed by FoundryLabs, Inc.
+Copyright 2025 FoundryLabs, Inc.
+
+Licensed under the MIT License. See LICENSE for the full license text.
+
+Significant changes from the upstream E2B SDK:
+
+  - Renamed PyPI package: `e2b` → `grotte`
+  - Renamed Python module: `e2b/` → `grotte/`
+    (`from grotte import Sandbox`, was `from e2b import …`)
+  - Renamed internal generated module: `e2b_connect` → `grt_connect`
+  - Default API endpoint switched to https://api.grotte.parallactic.fr
+  - API key prefix: `e2b_` → `grt_`
+  - Environment variable prefix: `E2B_*` → `GROTTE_*`
+    (legacy `E2B_*` names accepted as fallbacks)
+  - Brand-string substitutions throughout user-facing output
+
+Source: https://github.com/parallactic-ai/grotte-sdk
+Upstream: https://github.com/e2b-dev/E2B
