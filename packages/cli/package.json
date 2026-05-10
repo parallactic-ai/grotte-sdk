@@ -1,6 +1,6 @@
 {
   "name": "@grotte/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CLI for managing grotte sandbox templates",
   "homepage": "https://grotte.parallactic.fr",
   "license": "MIT",
@@ -84,7 +84,7 @@
     "commander": "^11.1.0",
     "console-table-printer": "^2.11.2",
     "dockerfile-ast": "^0.6.1",
-    "grotte": "workspace:*",
+    "grotte": "^0.1.0",
     "handlebars": "^4.7.9",
     "inquirer": "^12.10.0",
     "open": "^9.1.0",
