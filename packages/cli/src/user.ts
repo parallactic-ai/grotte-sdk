@@ -20,12 +20,19 @@ export const DOCS_BASE =
   process.env.GROTTE_DOCS_BASE ||
   `https://${process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'}/docs`
 
+// The dashboard is hosted on its own subdomain (`app.<domain>`), distinct
+// from the marketing/landing site at `<domain>`. Both honour
+// GROTTE_DASHBOARD_BASE for full overrides.
 export const DASHBOARD_BASE =
   process.env.GROTTE_DASHBOARD_BASE ||
-  `https://${process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'}/dashboard`
+  `https://app.${process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'}/dashboard`
 
-export const SANDBOX_INSPECT_URL = (sandboxId: string) =>
-  `${DASHBOARD_BASE}/inspect/sandbox/${sandboxId}`
+// The dashboard's sandbox list page surfaces every active sandbox for
+// the team — there's no per-sandbox inspect page yet, so we point the
+// CLI's "inspect this sandbox" link at the list. The user can spot the
+// sandbox by ID in the table.
+export const SANDBOX_INSPECT_URL = (_sandboxId: string) =>
+  `${DASHBOARD_BASE}/sandboxes`
 
 export function getUserConfig(): UserConfig | null {
   if (!fs.existsSync(USER_CONFIG_PATH)) return null
