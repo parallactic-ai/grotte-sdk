@@ -129,16 +129,21 @@ jobs:
         run: npm publish --access public --provenance
 
       # ── CLI ──────────────────────────────────────────────────────
-      # If JS SDK was just bumped, point CLI's `grotte` dep at it before
-      # bumping CLI version. This prevents the workspace:* footgun
-      # (see CLAUDE.md → Publishing).
-      - name: Update CLI's grotte dep range
-        if: (inputs.package == 'cli' || inputs.package == 'all') && env.JS_SDK_NEW_VERSION != ''
+      # CLI's grotte dep lives as `workspace:*` in repo for dev ergonomics.
+      # Before publish we rewrite it to a real version range — either the
+      # JS SDK we just bumped, or the latest published grotte version.
+      # (This prevents the workspace:* footgun documented in CLAUDE.md.)
+      - name: Rewrite CLI's grotte dep to a real version
+        if: inputs.package == 'cli' || inputs.package == 'all'
         working-directory: packages/cli
         run: |
-          node -e "const f='package.json';const p=require('./'+f);p.dependencies.grotte='^'+process.env.JS_SDK_NEW_VERSION;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
-          cd ../..
-          pnpm install --no-frozen-lockfile
+          TARGET="${JS_SDK_NEW_VERSION:-}"
+          if [ -z "$TARGET" ]; then
+            TARGET=$(npm view grotte version)
+          fi
+          export TARGET
+          echo "Pinning grotte dep to ^${TARGET}"
+          node -e "const f='package.json';const p=require('./'+f);p.dependencies.grotte='^'+process.env.TARGET;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
 
       - name: Bump CLI version
         if: inputs.package == 'cli' || inputs.package == 'all'
