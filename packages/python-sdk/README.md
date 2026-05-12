@@ -62,6 +62,42 @@ files = sbx.files.list("/tmp")
 sbx.kill()
 ```
 
+### Lifecycle control
+
+```python
+# Extend the sandbox before it expires
+sbx.set_timeout(600)        # set absolute timeout, seconds
+sbx.refresh_ttl(60)         # add 60s to the current TTL
+
+# Pause + resume (paused sandboxes keep filesystem state)
+sbx.pause()
+restored = Sandbox.connect(sbx.sandbox_id)
+
+# Snapshot the running filesystem to a reusable template
+snap = sbx.create_snapshot()
+fresh = Sandbox.create(snap.snapshot_id)
+```
+
+Pass `lifecycle={"on_timeout": "pause", "auto_resume": True}` to
+`Sandbox.create()` to make the sandbox auto-pause on timeout and
+auto-resume on the next request.
+
+### Network isolation
+
+Cut egress at runtime — useful for executing untrusted or AI-generated
+code without giving it internet access.
+
+```python
+sbx = Sandbox.create("base")
+sbx.set_network(internet_access=False)
+sbx.commands.run("curl --max-time 3 https://example.com")  # times out
+sbx.set_network(internet_access=True)                      # restore
+```
+
+To start a sandbox with no network from creation, pass
+`allow_internet_access=False` to `Sandbox.create()` (works the same
+as `network={"deny_out": ["0.0.0.0/0"]}`).
+
 ### Templates
 
 Available sandbox environments:

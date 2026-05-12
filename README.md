@@ -63,6 +63,26 @@ with Sandbox.create() as sandbox:
     print(result.stdout)  # Hello from GROTTE!
 ```
 
+### Lifecycle, snapshots, and network isolation
+
+```py
+sbx = Sandbox.create("base")
+sbx.set_timeout(600)         # extend timeout
+sbx.refresh_ttl(60)          # add 60s to current TTL
+sbx.set_network(internet_access=False)  # cut egress for untrusted code
+sbx.pause()                  # filesystem-preserving pause
+snap = sbx.create_snapshot() # snapshot to a reusable template
+```
+
+Equivalents in the CLI:
+
+```bash
+grotte sandbox pause <id>
+grotte sandbox resume <id>
+grotte snapshot create <sandbox-id>
+grotte snapshot list
+```
+
 ### 4. Code execution with Code Interpreter
 
 If you need to execute code with [`runCode()`](https://grotte.parallactic.fr/docs/code-interpreting)/[`run_code()`](https://grotte.parallactic.fr/docs/code-interpreting), install the [Code Interpreter SDK](https://github.com/parallactic-ai/code-interpreter):

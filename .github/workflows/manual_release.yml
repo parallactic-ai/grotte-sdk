@@ -1,0 +1,226 @@
+name: Manual Release
+
+# Streamlined publish flow for the parallactic-ai fork. Mirrors the
+# manual workflow documented in CLAUDE.md: bump version, build, publish
+# (npm OR PyPI), tag, push. No changesets required.
+#
+# Required secrets (see CLAUDE.md → "GitHub Secrets"):
+#   - NPM_TOKEN     (npm Automation token with publish on `grotte` + `@grotte/cli`)
+#   - PYPI_TOKEN    (PyPI API token scoped to the `grotte` project)
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Which package to publish'
+        type: choice
+        required: true
+        options:
+          - js-sdk
+          - cli
+          - python-sdk
+          - all
+        default: js-sdk
+      bump:
+        description: 'Version bump'
+        type: choice
+        required: true
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+      dry-run:
+        description: 'Build + tarball-inspect only (skip actual publish + push)'
+        type: boolean
+        required: false
+        default: false
+
+concurrency:
+  group: manual-release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  id-token: write
+
+jobs:
+  release:
+    name: Release ${{ inputs.package }} (${{ inputs.bump }})
+    runs-on: ubuntu-22.04
+
+    env:
+      INPUT_PACKAGE: ${{ inputs.package }}
+      INPUT_BUMP: ${{ inputs.bump }}
+      INPUT_DRY_RUN: ${{ inputs.dry-run }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Parse .tool-versions
+        uses: wistia/parse-tool-versions@v2.1.1
+        with:
+          filename: '.tool-versions'
+          uppercase: 'true'
+          prefix: 'tool_version_'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '${{ env.TOOL_VERSION_PNPM }}'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '${{ env.TOOL_VERSION_NODEJS }}'
+          registry-url: 'https://registry.npmjs.org'
+          cache: pnpm
+
+      - name: Setup Python
+        if: inputs.package == 'python-sdk' || inputs.package == 'all'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '${{ env.TOOL_VERSION_PYTHON }}'
+
+      - name: Setup Poetry
+        if: inputs.package == 'python-sdk' || inputs.package == 'all'
+        uses: snok/install-poetry@v1
+        with:
+          version: '${{ env.TOOL_VERSION_POETRY }}'
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+
+      - name: Configure git for bot commits
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Install JS dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ── JS SDK ───────────────────────────────────────────────────
+      - name: Bump JS SDK version
+        if: inputs.package == 'js-sdk' || inputs.package == 'all'
+        working-directory: packages/js-sdk
+        run: |
+          NEW=$(npm version "$INPUT_BUMP" --no-git-tag-version | tr -d v)
+          echo "JS_SDK_NEW_VERSION=$NEW" >> "$GITHUB_ENV"
+
+      - name: Build JS SDK
+        if: inputs.package == 'js-sdk' || inputs.package == 'all'
+        run: pnpm --filter grotte run build
+
+      - name: Inspect JS SDK tarball
+        if: inputs.package == 'js-sdk' || inputs.package == 'all'
+        working-directory: packages/js-sdk
+        run: |
+          npm pack
+          tar -xzOf grotte-*.tgz package/package.json | head -40
+
+      - name: Publish JS SDK
+        if: (inputs.package == 'js-sdk' || inputs.package == 'all') && !inputs.dry-run
+        working-directory: packages/js-sdk
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
+
+      # ── CLI ──────────────────────────────────────────────────────
+      # If JS SDK was just bumped, point CLI's `grotte` dep at it before
+      # bumping CLI version. This prevents the workspace:* footgun
+      # (see CLAUDE.md → Publishing).
+      - name: Update CLI's grotte dep range
+        if: (inputs.package == 'cli' || inputs.package == 'all') && env.JS_SDK_NEW_VERSION != ''
+        working-directory: packages/cli
+        run: |
+          node -e "const f='package.json';const p=require('./'+f);p.dependencies.grotte='^'+process.env.JS_SDK_NEW_VERSION;require('fs').writeFileSync(f,JSON.stringify(p,null,2)+'\n')"
+          cd ../..
+          pnpm install --no-frozen-lockfile
+
+      - name: Bump CLI version
+        if: inputs.package == 'cli' || inputs.package == 'all'
+        working-directory: packages/cli
+        run: |
+          NEW=$(npm version "$INPUT_BUMP" --no-git-tag-version | tr -d v)
+          echo "CLI_NEW_VERSION=$NEW" >> "$GITHUB_ENV"
+
+      - name: Build CLI
+        if: inputs.package == 'cli' || inputs.package == 'all'
+        run: pnpm --filter @grotte/cli run build
+
+      - name: Inspect CLI tarball (verify no workspace:* shipped)
+        if: inputs.package == 'cli' || inputs.package == 'all'
+        working-directory: packages/cli
+        run: |
+          npm pack
+          tar -xzOf grotte-cli-*.tgz package/package.json > /tmp/cli-pkg.json
+          cat /tmp/cli-pkg.json | head -40
+          if grep -q '"workspace:' /tmp/cli-pkg.json; then
+            echo "::error::CLI tarball contains workspace: protocol — abort."
+            exit 1
+          fi
+
+      - name: Publish CLI
+        if: (inputs.package == 'cli' || inputs.package == 'all') && !inputs.dry-run
+        working-directory: packages/cli
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public --provenance
+
+      # ── Python SDK ───────────────────────────────────────────────
+      - name: Bump Python SDK version
+        if: inputs.package == 'python-sdk' || inputs.package == 'all'
+        working-directory: packages/python-sdk
+        run: |
+          poetry version "$INPUT_BUMP"
+          NEW=$(poetry version -s)
+          echo "PY_SDK_NEW_VERSION=$NEW" >> "$GITHUB_ENV"
+
+      - name: Build Python SDK
+        if: inputs.package == 'python-sdk' || inputs.package == 'all'
+        working-directory: packages/python-sdk
+        run: |
+          rm -rf dist
+          poetry build
+
+      - name: Publish Python SDK
+        if: (inputs.package == 'python-sdk' || inputs.package == 'all') && !inputs.dry-run
+        working-directory: packages/python-sdk
+        env:
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: |
+          poetry config pypi-token.pypi "${PYPI_TOKEN}"
+          poetry publish --skip-existing
+
+      # ── Tag + commit + push ──────────────────────────────────────
+      - name: Commit version bumps + tag
+        if: ${{ !inputs.dry-run }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MSG="chore(release):"
+          TAGS=()
+          if [ -n "${JS_SDK_NEW_VERSION:-}" ]; then
+            MSG="$MSG grotte@$JS_SDK_NEW_VERSION"
+            TAGS+=("grotte-v${JS_SDK_NEW_VERSION}")
+          fi
+          if [ -n "${CLI_NEW_VERSION:-}" ]; then
+            MSG="$MSG @grotte/cli@$CLI_NEW_VERSION"
+            TAGS+=("cli-v${CLI_NEW_VERSION}")
+          fi
+          if [ -n "${PY_SDK_NEW_VERSION:-}" ]; then
+            MSG="$MSG grotte(PyPI)@$PY_SDK_NEW_VERSION"
+            TAGS+=("python-v${PY_SDK_NEW_VERSION}")
+          fi
+          git add -A
+          if git commit -m "$MSG [skip ci]"; then
+            for t in "${TAGS[@]}"; do
+              git tag -a "$t" -m "Release $t"
+            done
+            git push origin HEAD --follow-tags
+          else
+            echo "Nothing to commit"
+          fi

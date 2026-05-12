@@ -117,6 +117,38 @@ ready CHANGELOG entry.
 - Brand strings are mint `#2deba0` (GROTTE), never cyan `#00dcff` (that's
   the parallactic.fr landing site).
 
+## CI/CD
+
+Two paths exist:
+
+1. **`manual_release.yml`** (Actions → "Manual Release" → Run workflow)
+   — the one to use day-to-day. Pick the package (js-sdk / cli / python-sdk / all)
+   and the bump (patch / minor / major); it runs the same flow you'd run by hand:
+   bump version → build → tarball-inspect (rejects `workspace:*` for CLI) →
+   `npm publish --provenance` or `poetry publish` → tag → commit + push.
+   `dry-run: true` skips the publish and the push.
+
+2. **`release.yml` + `publish_packages.yml`** — inherited from upstream e2b,
+   requires changesets entries (`.changeset/*.md`) and a Slack webhook. Kept
+   for reference; switch to it only if you adopt changesets.
+
+`typecheck.yml` and `lint.yml` run on every PR and every push to `main`.
+
+### Required GitHub Secrets
+
+Set these in **Settings → Secrets and variables → Actions → New repository secret**.
+As of 2026-05-12 the `parallactic-ai/grotte-sdk` repo has none configured.
+
+| Secret | Used by | How to get it |
+|---|---|---|
+| `NPM_TOKEN` | manual_release | npmjs.com → Profile → Access Tokens → Generate (Automation type, scoped read+write to `grotte` and `@grotte/cli`) |
+| `PYPI_TOKEN` | manual_release, publish_packages | pypi.org/manage/account/token/ → Add API token (scoped to `grotte` project) |
+| `GROTTE_API_KEY` | (only if you wire live smoke tests into CI) | grotte.parallactic.fr/dashboard → Keys |
+| `SLACK_WEBHOOK` | release.yml failure notifications (optional) | api.slack.com/apps → Incoming Webhooks |
+| `VERSION_BUMPER_APPID` + `VERSION_BUMPER_SECRET` | publish_packages.yml only (changesets path) | GitHub App with contents:write — only needed if you adopt the changesets workflow |
+
+`manual_release.yml` only needs the first two (`NPM_TOKEN`, `PYPI_TOKEN`).
+
 ## Remotes
 
 - `origin` → `https://github.com/parallactic-ai/grotte-sdk`

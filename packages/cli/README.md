@@ -33,27 +33,43 @@ Get your API key at [app.grotte.parallactic.fr](https://app.grotte.parallactic.f
 ```bash
 grotte sandbox list                  # list active sandboxes
 grotte sandbox create [template]     # create a new sandbox
+grotte sandbox connect <id>          # attach a terminal to a running sandbox
+grotte sandbox exec <id> <cmd>       # run a one-off command
 grotte sandbox logs <id>             # stream logs in real time
+grotte sandbox metrics <id>          # show CPU/RAM/disk metrics
+grotte sandbox info <id>             # show sandbox metadata
+grotte sandbox pause <id>            # pause (filesystem state retained)
+grotte sandbox resume <id>           # resume a paused sandbox
 grotte sandbox kill <id>             # kill a sandbox immediately
+```
+
+### Snapshots
+
+```bash
+grotte snapshot create <sandbox-id>  # snapshot a sandbox to a reusable template
+grotte snapshot list                 # list all snapshots
+grotte snapshot list --sandbox <id>  # filter by source sandbox
+```
+
+Use a snapshot as a template:
+
+```bash
+grotte sandbox create <snapshot-id>
 ```
 
 ### Templates
 
 ```bash
-grotte templates list                # list available environments
-```
-
-### Keys
-
-```bash
-grotte keys list                     # list your API keys
-grotte keys rotate                   # rotate your active key
+grotte template list                 # list available environments
+grotte template init                 # scaffold a new template directory
+grotte template build                # build & push a template
 ```
 
 ### Account
 
 ```bash
-grotte whoami                        # show active account
+grotte auth info                     # show active account
+grotte auth login                    # log in via browser
 grotte auth logout                   # revoke local session
 ```
 

@@ -51,6 +51,42 @@ const files = await sbx.files.list(path: string)
 await sbx.kill()
 ```
 
+### Lifecycle control
+
+```typescript
+// Extend the sandbox before it expires
+await sbx.setTimeout(600_000)      // absolute timeout, ms
+await sbx.updateTimeout(600_000)   // alias of setTimeout
+await sbx.refreshTtl(60)           // add 60s to the current TTL
+
+// Pause + resume (paused sandboxes keep filesystem state)
+await sbx.pause()
+const restored = await Sandbox.connect(sbx.sandboxId)
+
+// Snapshot the running filesystem to a reusable template
+const snap = await sbx.createSnapshot()
+const fresh = await Sandbox.create(snap.snapshotId)
+```
+
+Pass `lifecycle: { onTimeout: 'pause', autoResume: true }` to
+`Sandbox.create()` to auto-pause on timeout and auto-resume on the
+next request.
+
+### Network isolation
+
+Cut egress at runtime — useful for executing untrusted or AI-generated
+code without giving it internet access.
+
+```typescript
+const sbx = await Sandbox.create('base')
+await sbx.setNetwork(false)
+await sbx.commands.run('curl --max-time 3 https://example.com')  // fails
+await sbx.setNetwork(true)                                       // restore
+```
+
+To start a sandbox with no network from creation, pass
+`allowInternetAccess: false` to `Sandbox.create()`.
+
 ### Templates
 
 Available sandbox environments:
