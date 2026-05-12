@@ -437,6 +437,97 @@ class AsyncSandbox(SandboxApi):
         )
 
     @overload
+    async def refresh_ttl(
+        self,
+        duration: int,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Refresh the sandbox by extending its time to live by ``duration`` seconds.
+
+        :param duration: Additional seconds to keep the sandbox alive
+        """
+        ...
+
+    @overload
+    @staticmethod
+    async def refresh_ttl(
+        sandbox_id: str,
+        duration: int,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Refresh the sandbox specified by ``sandbox_id`` by extending its time to live by ``duration`` seconds.
+
+        :param sandbox_id: Sandbox ID
+        :param duration: Additional seconds to keep the sandbox alive
+        """
+        ...
+
+    @class_method_variant("_cls_refresh_ttl")
+    async def refresh_ttl(
+        self,
+        duration: int,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Refresh the sandbox by extending its time to live by ``duration`` seconds.
+        """
+        await SandboxApi._cls_refresh_ttl(
+            sandbox_id=self.sandbox_id,
+            duration=duration,
+            **self.connection_config.get_api_params(**opts),
+        )
+
+    @overload
+    async def set_network(
+        self,
+        internet_access: bool,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Toggle internet access for this sandbox at runtime.
+
+        When disabled, the sandbox has no egress — safe for running untrusted
+        or AI-generated code.
+
+        :param internet_access: ``True`` to enable, ``False`` to isolate
+        """
+        ...
+
+    @overload
+    @staticmethod
+    async def set_network(
+        sandbox_id: str,
+        internet_access: bool,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Toggle internet access for the sandbox specified by ``sandbox_id``.
+
+        :param sandbox_id: Sandbox ID
+        :param internet_access: ``True`` to enable, ``False`` to isolate
+        """
+        ...
+
+    @class_method_variant("_cls_set_network")
+    async def set_network(
+        self,
+        internet_access: bool,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        """
+        Toggle internet access for this sandbox at runtime.
+
+        :param internet_access: ``True`` to enable, ``False`` to isolate
+        """
+        await SandboxApi._cls_set_network(
+            sandbox_id=self.sandbox_id,
+            internet_access=internet_access,
+            **self.connection_config.get_api_params(**opts),
+        )
+
+    @overload
     async def get_info(
         self,
         **opts: Unpack[ApiParams],

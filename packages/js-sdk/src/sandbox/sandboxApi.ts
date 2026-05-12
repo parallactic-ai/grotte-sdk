@@ -5,7 +5,7 @@ import {
   DEFAULT_SANDBOX_TIMEOUT_MS,
 } from '../connectionConfig'
 import { compareVersions } from 'compare-versions'
-import { SandboxNotFoundError, TemplateError } from '../errors'
+import { SandboxError, SandboxNotFoundError, TemplateError } from '../errors'
 import { timeoutToSeconds } from '../utils'
 import type { Volume } from '../volume'
 import type { McpServer as BaseMcpServer } from './mcp'
@@ -568,6 +568,92 @@ export class SandboxApi {
     const err = handleApiError(res)
     if (err) {
       throw err
+    }
+  }
+
+  /**
+   * Refresh the sandbox by extending its time to live.
+   *
+   * @param sandboxId sandbox ID.
+   * @param durationSeconds additional seconds to keep the sandbox alive.
+   * @param opts connection options.
+   */
+  static async refreshTtl(
+    sandboxId: string,
+    durationSeconds: number,
+    opts?: SandboxApiOpts
+  ): Promise<void> {
+    const config = new ConnectionConfig(opts)
+    const client = new ApiClient(config)
+
+    const res = await client.api.POST('/sandboxes/{sandboxID}/refreshes', {
+      params: {
+        path: {
+          sandboxID: sandboxId,
+        },
+      },
+      body: {
+        duration: durationSeconds,
+      },
+      signal: config.getSignal(opts?.requestTimeoutMs),
+    })
+
+    if (res.error?.code === 404) {
+      throw new SandboxNotFoundError(`Sandbox ${sandboxId} not found`)
+    }
+
+    const err = handleApiError(res)
+    if (err) {
+      throw err
+    }
+  }
+
+  /**
+   * Toggle internet access for a sandbox at runtime.
+   *
+   * When disabled, the sandbox has no egress — safe for running untrusted
+   * or AI-generated code.
+   *
+   * @param sandboxId sandbox ID.
+   * @param internetAccess `true` to enable, `false` to isolate.
+   * @param opts connection options.
+   */
+  static async setNetwork(
+    sandboxId: string,
+    internetAccess: boolean,
+    opts?: SandboxApiOpts
+  ): Promise<void> {
+    const config = new ConnectionConfig(opts)
+
+    // PUT /sandboxes/{id}/network is not in the generated OpenAPI client; raw fetch.
+    const url = `${config.apiUrl}/sandboxes/${encodeURIComponent(sandboxId)}/network`
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+      ...(config.apiKey ? { 'X-API-KEY': config.apiKey } : {}),
+      ...(config.accessToken
+        ? { Authorization: `Bearer ${config.accessToken}` }
+        : {}),
+      ...(config.headers ?? {}),
+    }
+
+    // Body field is `allow_internet_access` — the server silently ignores
+    // camelCase variants, so the snake_case form is load-bearing.
+    const res = await fetch(url, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify({ allow_internet_access: internetAccess }),
+      signal: config.getSignal(opts?.requestTimeoutMs),
+    })
+
+    if (res.status === 404) {
+      throw new SandboxNotFoundError(`Sandbox ${sandboxId} not found`)
+    }
+
+    if (res.status >= 300) {
+      const text = await res.text().catch(() => '')
+      throw new SandboxError(
+        `Failed to set network access: ${res.status} ${text}`
+      )
     }
   }
 

@@ -568,6 +568,73 @@ export class Sandbox extends SandboxApi {
   }
 
   /**
+   * Update the sandbox timeout. Alias of {@link Sandbox.setTimeout} that avoids
+   * shadowing the global `setTimeout` when imported by name.
+   *
+   * @param timeoutMs new timeout in **milliseconds**.
+   * @param opts connection options.
+   */
+  async updateTimeout(
+    timeoutMs: number,
+    opts?: Pick<SandboxOpts, 'requestTimeoutMs'>
+  ) {
+    return this.setTimeout(timeoutMs, opts)
+  }
+
+  /**
+   * Refresh the sandbox by extending its time to live.
+   *
+   * @param durationSeconds additional seconds to keep the sandbox alive.
+   * @param opts connection options.
+   */
+  async refreshTtl(
+    durationSeconds: number,
+    opts?: Pick<SandboxOpts, 'requestTimeoutMs'>
+  ): Promise<void> {
+    if (this.connectionConfig.debug) {
+      return
+    }
+
+    await SandboxApi.refreshTtl(
+      this.sandboxId,
+      durationSeconds,
+      this.resolveApiOpts(opts)
+    )
+  }
+
+  /**
+   * Toggle internet access for this sandbox at runtime.
+   *
+   * When disabled, the sandbox has no egress — safe for running untrusted
+   * or AI-generated code.
+   *
+   * @param internetAccess `true` to enable, `false` to isolate.
+   * @param opts connection options.
+   *
+   * @example
+   * ```ts
+   * const sbx = await Sandbox.create('base')
+   * await sbx.setNetwork(false)
+   * const result = await sbx.commands.run('curl --max-time 3 https://google.com')
+   * // result.exitCode !== 0 — network isolated
+   * ```
+   */
+  async setNetwork(
+    internetAccess: boolean,
+    opts?: Pick<SandboxOpts, 'requestTimeoutMs'>
+  ): Promise<void> {
+    if (this.connectionConfig.debug) {
+      return
+    }
+
+    await SandboxApi.setNetwork(
+      this.sandboxId,
+      internetAccess,
+      this.resolveApiOpts(opts)
+    )
+  }
+
+  /**
    * Kill the sandbox.
    *
    * @param opts connection options.

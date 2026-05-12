@@ -12,6 +12,7 @@ from grotte.api.client.api.sandboxes import (
     post_sandboxes,
     post_sandboxes_sandbox_id_connect,
     post_sandboxes_sandbox_id_pause,
+    post_sandboxes_sandbox_id_refreshes,
     post_sandboxes_sandbox_id_snapshots,
     post_sandboxes_sandbox_id_timeout,
 )
@@ -20,6 +21,7 @@ from grotte.api.client.models import (
     ConnectSandbox,
     Error,
     NewSandbox,
+    PostSandboxesSandboxIDRefreshesBody,
     PostSandboxesSandboxIDSnapshotsBody,
     PostSandboxesSandboxIDTimeoutBody,
     Sandbox,
@@ -158,6 +160,61 @@ class SandboxApi(SandboxBase):
 
         if res.status_code >= 300:
             raise handle_api_exception(res)
+
+    @classmethod
+    async def _cls_refresh_ttl(
+        cls,
+        sandbox_id: str,
+        duration: int,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        config = ConnectionConfig(**opts)
+
+        if config.debug:
+            return
+
+        api_client = get_api_client(config)
+        res = await post_sandboxes_sandbox_id_refreshes.asyncio_detailed(
+            sandbox_id,
+            client=api_client,
+            body=PostSandboxesSandboxIDRefreshesBody(duration=duration),
+        )
+
+        if res.status_code == 404:
+            raise SandboxNotFoundException(f"Sandbox {sandbox_id} not found")
+
+        if res.status_code >= 300:
+            raise handle_api_exception(res)
+
+    @classmethod
+    async def _cls_set_network(
+        cls,
+        sandbox_id: str,
+        internet_access: bool,
+        **opts: Unpack[ApiParams],
+    ) -> None:
+        config = ConnectionConfig(**opts)
+
+        if config.debug:
+            return
+
+        api_client = get_api_client(config)
+        # PUT /sandboxes/{id}/network is not in the generated client; call raw httpx.
+        # Body field is `allow_internet_access` — the server silently ignores
+        # camelCase variants, so the snake_case form is load-bearing.
+        res = await api_client.get_async_httpx_client().request(
+            "PUT",
+            f"/sandboxes/{sandbox_id}/network",
+            json={"allow_internet_access": internet_access},
+        )
+
+        if res.status_code == 404:
+            raise SandboxNotFoundException(f"Sandbox {sandbox_id} not found")
+
+        if res.status_code >= 300:
+            raise SandboxException(
+                f"Failed to set network access: {res.status_code} {res.text}"
+            )
 
     @classmethod
     async def _create_sandbox(

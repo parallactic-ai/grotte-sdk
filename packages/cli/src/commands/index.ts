@@ -3,6 +3,7 @@ import * as commander from 'commander'
 import { asPrimary } from 'src/utils/format'
 import { templateCommand } from './template'
 import { sandboxCommand } from './sandbox'
+import { snapshotCommand } from './snapshot'
 import { authCommand } from './auth'
 
 export const program = new commander.Command()
@@ -19,3 +20,4 @@ Visit ${asPrimary(
   .addCommand(authCommand)
   .addCommand(templateCommand)
   .addCommand(sandboxCommand)
+  .addCommand(snapshotCommand)

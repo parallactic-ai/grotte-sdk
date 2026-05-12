@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "grotte"
-version = "0.1.1"
+version = "0.1.2"
 description = "GROTTE SDK that give agents cloud environments"
 authors = ["grotte <hello@grotte.parallactic.fr>"]
 license = "MIT"
