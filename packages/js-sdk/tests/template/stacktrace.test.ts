@@ -131,7 +131,9 @@ async function expectToThrowAndCheckTrace(
 }
 
 buildTemplateTest('traces on fromImage', async ({ buildTemplate }) => {
-  const template = Template().fromImage('grotte.parallactic.fr/this-image-does-not-exist')
+  const template = Template().fromImage(
+    'grotte.parallactic.fr/this-image-does-not-exist'
+  )
   await expectToThrowAndCheckTrace(async () => {
     await buildTemplate(template, { name: 'fromImage', skipCache: true })
   }, 'fromImage')

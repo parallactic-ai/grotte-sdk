@@ -10,10 +10,7 @@ const PAGE_LIMIT = 100
 export const listCommand = new commander.Command('list')
   .description('list snapshots')
   .alias('ls')
-  .option(
-    '-s, --sandbox <sandboxID>',
-    'filter snapshots by source sandbox ID'
-  )
+  .option('-s, --sandbox <sandboxID>', 'filter snapshots by source sandbox ID')
   .option('-f, --format <format>', 'output format, eg. json, pretty')
   .action(async (options: { sandbox?: string; format?: string }) => {
     try {

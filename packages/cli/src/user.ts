@@ -14,7 +14,11 @@ export interface UserConfig {
   dockerProxySet?: boolean
 }
 
-export const USER_CONFIG_PATH = path.join(os.homedir(), '.grotte', 'config.json') // TODO: Keep in Keychain
+export const USER_CONFIG_PATH = path.join(
+  os.homedir(),
+  '.grotte',
+  'config.json'
+) // TODO: Keep in Keychain
 
 export const DOCS_BASE =
   process.env.GROTTE_DOCS_BASE ||

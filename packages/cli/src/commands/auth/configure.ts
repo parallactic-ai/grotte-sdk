@@ -22,7 +22,9 @@ export const configureCommand = new commander.Command('configure')
     console.log('Configuring user...\n')
 
     if (!fs.existsSync(USER_CONFIG_PATH)) {
-      console.log('No user config found, run `grotte auth login` to log in first.')
+      console.log(
+        'No user config found, run `grotte auth login` to log in first.'
+      )
       return
     }
 
@@ -41,10 +43,12 @@ export const configureCommand = new commander.Command('configure')
           message: chalk.default.underline('Select team'),
           type: 'list',
           pageSize: 50,
-          choices: res.data.map((team: grotte.components['schemas']['Team']) => ({
-            name: asFormattedTeam(team, userConfig.teamId),
-            value: team,
-          })),
+          choices: res.data.map(
+            (team: grotte.components['schemas']['Team']) => ({
+              name: asFormattedTeam(team, userConfig.teamId),
+              value: team,
+            })
+          ),
         },
       ])
     )['team']

@@ -21,7 +21,7 @@ export const loginCommand = new commander.Command('login')
   .description('log in to CLI')
   .option(
     '--key <apiKey>',
-    'log in non-interactively with a team API key (grt_…). Sandbox-scoped commands work; template/team-management commands still require the browser flow.',
+    'log in non-interactively with a team API key (grt_…). Sandbox-scoped commands work; template/team-management commands still require the browser flow.'
   )
   .action(async (opts: { key?: string }) => {
     let userConfig: UserConfig | null = null
@@ -40,9 +40,7 @@ export const loginCommand = new commander.Command('login')
     if (opts.key) {
       if (!opts.key.startsWith('grt_')) {
         console.error(
-          asFormattedError(
-            'Invalid key format — must start with grt_',
-          ),
+          asFormattedError('Invalid key format — must start with grt_')
         )
         process.exit(1)
       }
@@ -56,7 +54,7 @@ export const loginCommand = new commander.Command('login')
       fs.mkdirSync(path.dirname(USER_CONFIG_PATH), { recursive: true })
       fs.writeFileSync(USER_CONFIG_PATH, JSON.stringify(userConfig, null, 2))
       console.log(
-        `Logged in with team API key. Stored in ${asBold(USER_CONFIG_PATH)}`,
+        `Logged in with team API key. Stored in ${asBold(USER_CONFIG_PATH)}`
       )
       process.exit(0)
     }

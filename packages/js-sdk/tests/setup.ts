@@ -138,7 +138,8 @@ export const volumeTest = base.extend<VolumeFixture>({
 })
 
 export const isDebug = process.env.GROTTE_DEBUG !== undefined
-export const isIntegrationTest = process.env.GROTTE_INTEGRATION_TEST !== undefined
+export const isIntegrationTest =
+  process.env.GROTTE_INTEGRATION_TEST !== undefined
 
 function generateRandomString(length: number = 8): string {
   return Math.random()

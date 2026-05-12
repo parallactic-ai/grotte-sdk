@@ -33,13 +33,12 @@ const DEFAULT_GIT_ENV: Record<string, string> = {
 /**
  * Options for git operations in the sandbox.
  */
-export interface GitRequestOpts
-  extends Partial<
-    Pick<
-      CommandStartOpts,
-      'envs' | 'user' | 'cwd' | 'timeoutMs' | 'requestTimeoutMs'
-    >
-  > {}
+export interface GitRequestOpts extends Partial<
+  Pick<
+    CommandStartOpts,
+    'envs' | 'user' | 'cwd' | 'timeoutMs' | 'requestTimeoutMs'
+  >
+> {}
 
 /**
  * Options for cloning a repository.
