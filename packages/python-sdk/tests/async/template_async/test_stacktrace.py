@@ -94,7 +94,9 @@ async def _expect_to_throw_and_check_trace(func, expected_method: str):
 
 @pytest.mark.skip_debug()
 async def test_traces_on_from_image(async_build):
-    template = AsyncTemplate().from_image("grotte.parallactic.fr/this-image-does-not-exist")
+    template = AsyncTemplate().from_image(
+        "grotte.parallactic.fr/this-image-does-not-exist"
+    )
     await _expect_to_throw_and_check_trace(
         lambda: async_build(template, name="from_image", skip_cache=True), "from_image"
     )

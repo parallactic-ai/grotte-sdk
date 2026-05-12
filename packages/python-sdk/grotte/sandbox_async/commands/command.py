@@ -15,7 +15,11 @@ from grotte.envd.versions import ENVD_COMMANDS_STDIN
 from grotte.exceptions import SandboxException
 from grotte.sandbox.commands.main import ProcessInfo
 from grotte.sandbox.commands.command_handle import CommandResult
-from grotte.sandbox_async.commands.command_handle import AsyncCommandHandle, Stderr, Stdout
+from grotte.sandbox_async.commands.command_handle import (
+    AsyncCommandHandle,
+    Stderr,
+    Stdout,
+)
 from grotte.sandbox_async.utils import OutputHandler
 
 

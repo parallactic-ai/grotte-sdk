@@ -8,7 +8,12 @@ from grotte.connection_config import ApiParams, ConnectionConfig
 from grotte.template.consts import RESOLVE_SYMLINKS
 from grotte.template.logger import LogEntry, LogEntryEnd, LogEntryStart
 from grotte.template.main import TemplateBase, TemplateClass
-from grotte.template.types import BuildInfo, InstructionType, TemplateTag, TemplateTagInfo
+from grotte.template.types import (
+    BuildInfo,
+    InstructionType,
+    TemplateTag,
+    TemplateTagInfo,
+)
 from grotte.template.utils import normalize_build_arguments, read_dockerignore
 
 from .build_api import (

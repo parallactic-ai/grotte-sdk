@@ -10,7 +10,12 @@ from grotte.api.client_sync import get_api_client
 from grotte.template.consts import RESOLVE_SYMLINKS
 from grotte.template.logger import LogEntry, LogEntryEnd, LogEntryStart
 from grotte.template.main import TemplateBase, TemplateClass
-from grotte.template.types import BuildInfo, InstructionType, TemplateTag, TemplateTagInfo
+from grotte.template.types import (
+    BuildInfo,
+    InstructionType,
+    TemplateTag,
+    TemplateTagInfo,
+)
 from grotte.template_sync.build_api import (
     assign_tags,
     check_alias_exists,
