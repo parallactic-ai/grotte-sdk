@@ -16,6 +16,14 @@ module.exports = {
     '@typescript-eslint/member-ordering': 'error',
     '@typescript-eslint/ban-ts-comment': 'off', // "move fast" mode
     '@typescript-eslint/no-explicit-any': 'off', // "move fast" mode
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+      },
+    ],
     'linebreak-style': ['error', 'unix'],
     'unused-imports/no-unused-imports': 'error',
     // No double quotes
