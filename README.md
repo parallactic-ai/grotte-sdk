@@ -19,7 +19,7 @@
 <img width="100%" src="/readme-assets/preview.png" alt="Cover image">
 --->
 ## What is GROTTE?
-[GROTTE](https://www.grotte.parallactic.fr/) is an open-source infrastructure that allows you to run AI-generated code in secure isolated sandboxes in the cloud. To start and control sandboxes, use our [JavaScript SDK](https://www.npmjs.com/package/grotte) or [Python SDK](https://pypi.org/project/grotte).
+[GROTTE](https://parallactic.fr/) is EU-sovereign infrastructure for running AI-generated code in secure isolated sandboxes in the cloud. To start and control sandboxes, use our [JavaScript SDK](https://www.npmjs.com/package/grotte) or [Python SDK](https://pypi.org/project/grotte).
 
 ## Run your first Sandbox
 
@@ -36,8 +36,8 @@ pip install grotte
 ```
 
 ### 2. Get your GROTTE API key
-1. Sign up to GROTTE [here](https://grotte.parallactic.fr).
-2. Get your API key [here](https://grotte.parallactic.fr/dashboard?tab=keys).
+1. Sign up to GROTTE [here](https://app.grotte.parallactic.fr/).
+2. Get your API key [here](https://app.grotte.parallactic.fr/?tab=keys).
 3. Set environment variable with your API key
 ```
 GROTTE_API_KEY=grt_***
@@ -85,33 +85,14 @@ grotte snapshot list
 
 ### 4. Code execution with Code Interpreter
 
-If you need to execute code with [`runCode()`](https://grotte.parallactic.fr/docs/code-interpreting)/[`run_code()`](https://grotte.parallactic.fr/docs/code-interpreting), install the [Code Interpreter SDK](https://github.com/parallactic-ai/code-interpreter):
-
-```
-npm i @grotte/code-interpreter  # JavaScript/TypeScript
-pip install grotte-code-interpreter  # Python
-```
-
-```ts
-import { Sandbox } from '@grotte/code-interpreter'
-
-const sandbox = await Sandbox.create()
-const execution = await sandbox.runCode('x = 1; x += 1; x')
-console.log(execution.text)  // outputs 2
-```
+_Coming soon._ A dedicated `@grotte/code-interpreter` / `grotte-code-interpreter` package with a `runCode()` / `run_code()` helper for stateful Python + JS execution. In the meantime, run code from the regular SDK with `sandbox.commands.run("python -c '…'")`.
 
 ### 5. Check docs
-Visit [GROTTE documentation](https://grotte.parallactic.fr/docs).
+Visit [GROTTE documentation](https://parallactic.fr/docs).
 
 ### 6. GROTTE cookbook
-Visit our [Cookbook](https://github.com/parallactic-ai/grotte-sdk-cookbook/tree/main) to get inspired by examples with different LLMs and AI frameworks.
+_Coming soon._ A cookbook of end-to-end examples across LLMs and AI agent frameworks (LangChain, LangGraph, OpenAI Agents SDK, CrewAI, etc.) will live at `parallactic-ai/grotte-sdk-cookbook`. Until then, the [docs](https://parallactic.fr/docs) cover the SDK and CLI surface area.
 
 ## Self-hosting
 
-Read the [self-hosting guide](https://github.com/parallactic-ai/infra/blob/main/self-host.md) to learn how to set up the [GROTTE infrastructure](https://github.com/parallactic-ai/infra) on your own. The infrastructure is deployed using Terraform. 
-
-Supported cloud providers:
-- 🟢 AWS
-- 🟢 Google Cloud (GCP)
-- [ ] Azure
-- [ ] General Linux machine
+_Coming soon._ A self-hostable infrastructure stack (Terraform-deployed across AWS / GCP) is on the roadmap at `parallactic-ai/infra`. Until then, GROTTE is available as a managed service on `api.grotte.parallactic.fr` — see step 2 above to get an API key.

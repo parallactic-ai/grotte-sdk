@@ -143,7 +143,7 @@ As of 2026-05-12 the `parallactic-ai/grotte-sdk` repo has none configured.
 |---|---|---|
 | `NPM_TOKEN` | manual_release | npmjs.com → Profile → Access Tokens → Generate (Automation type, scoped read+write to `grotte` and `@grotte/cli`) |
 | `PYPI_TOKEN` | manual_release, publish_packages | pypi.org/manage/account/token/ → Add API token (scoped to `grotte` project) |
-| `GROTTE_API_KEY` | (only if you wire live smoke tests into CI) | grotte.parallactic.fr/dashboard → Keys |
+| `GROTTE_API_KEY` | (only if you wire live smoke tests into CI) | app.grotte.parallactic.fr → Keys tab |
 | `SLACK_WEBHOOK` | release.yml failure notifications (optional) | api.slack.com/apps → Incoming Webhooks |
 | `VERSION_BUMPER_APPID` + `VERSION_BUMPER_SECRET` | publish_packages.yml only (changesets path) | GitHub App with contents:write — only needed if you adopt the changesets workflow |
 

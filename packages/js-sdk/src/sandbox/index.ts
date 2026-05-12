@@ -59,7 +59,7 @@ export interface SandboxUrlOpts {
  * - Run isolated code
  * - Access the internet
  *
- * Check docs [here](https://grotte.parallactic.fr/docs).
+ * Check docs [here](https://parallactic.fr/docs).
  *
  * Use {@link Sandbox.create} to create a new sandbox.
  *

@@ -52,7 +52,7 @@ class Sandbox(SandboxApi):
     - Run isolated code
     - Access the internet
 
-    Check docs [here](https://grotte.parallactic.fr/docs).
+    Check docs [here](https://parallactic.fr/docs).
 
     Use the `Sandbox.create()` to create a new sandbox.
 
