@@ -5,13 +5,13 @@ The GROTTE Python + JavaScript SDK + CLI monorepo. Forked from
 `@grotte/cli` (npm) with the `grotte` binary, and `@grotte/python-sdk`
 (internal workspace name; PyPI is just `grotte`).
 
-## Live (verified 2026-05-12 against api.grotte.parallactic.fr)
+## Live (verified 2026-05-13 against api.grotte.parallactic.fr)
 
 | Registry | Package | Version | Notes |
 |---|---|---|---|
-| npm | `grotte` (JS SDK) | **0.1.2** | adds `setNetwork` / `refreshTtl` / `updateTimeout` |
-| npm | `@grotte/cli` | **0.1.3** | adds `snapshot create` + `snapshot list`; bundles `undici` so `sandbox resume` works |
-| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.2** | adds `set_network` + `refresh_ttl` |
+| npm | `grotte` (JS SDK) | **0.1.3** | adds `Sandbox.resume()` (alias for `connect()`) |
+| npm | `@grotte/cli` | **0.1.4** | adds `snapshot delete` + `sandbox create --json` |
+| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.3** | adds `Sandbox.resume()` + `filesystem` BC alias; fixes broken `grotte.parallactic.fr/docs` URL in `Sandbox` docstring |
 
 Sandbox-create lifecycle (create → run command → kill) verified clean
 across all three surfaces using the team's live API key. The `base`
