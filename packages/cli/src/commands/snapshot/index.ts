@@ -1,6 +1,7 @@
 import * as commander from 'commander'
 
 import { createCommand } from './create'
+import { deleteCommand } from './delete'
 import { listCommand } from './list'
 
 export const snapshotCommand = new commander.Command('snapshot')
@@ -8,3 +9,4 @@ export const snapshotCommand = new commander.Command('snapshot')
   .alias('snap')
   .addCommand(createCommand)
   .addCommand(listCommand)
+  .addCommand(deleteCommand)

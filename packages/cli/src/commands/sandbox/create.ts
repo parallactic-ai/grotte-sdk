@@ -25,6 +25,10 @@ export function createCommand(
     .addOption(pathOption)
     .addOption(configOption)
     .option('-d, --detach', 'create sandbox without connecting terminal to it')
+    .option(
+      '-j, --json',
+      'print sandbox creation result as JSON (implies --detach)'
+    )
     .alias(alias)
     .action(
       async (
@@ -34,6 +38,7 @@ export function createCommand(
           path?: string
           config?: string
           detach?: boolean
+          json?: boolean
         }
       ) => {
         if (deprecated) {
@@ -73,6 +78,21 @@ export function createCommand(
           }
 
           const sandbox = await grotte.Sandbox.create(templateID, { apiKey })
+
+          if (opts.json) {
+            // Machine-readable mode — skip terminal attach + dashboard
+            // URL banner so the only thing on stdout is the JSON payload.
+            // CI/scripts can `grotte sandbox create base --json | jq`.
+            process.stdout.write(
+              JSON.stringify({
+                sandboxId: sandbox.sandboxId,
+                templateId: templateID,
+                domain: sandbox.sandboxDomain,
+              }) + '\n'
+            )
+            process.exit(0)
+          }
+
           printDashboardSandboxInspectUrl(sandbox.sandboxId)
 
           if (!opts.detach) {

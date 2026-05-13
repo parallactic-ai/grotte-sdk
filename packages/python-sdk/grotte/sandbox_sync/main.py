@@ -72,6 +72,14 @@ class Sandbox(SandboxApi):
         return self._filesystem
 
     @property
+    def filesystem(self) -> Filesystem:
+        """
+        Alias for :attr:`files`. Older SDK builds exposed the module as
+        ``filesystem``; this alias keeps existing user code working.
+        """
+        return self._filesystem
+
+    @property
     def commands(self) -> Commands:
         """
         Module for running commands in the sandbox.
@@ -781,6 +789,30 @@ class Sandbox(SandboxApi):
         :deprecated: Use `pause()` instead.
         """
         self.pause(**opts)
+
+    def resume(
+        self,
+        timeout: Optional[int] = None,
+        **opts: Unpack[ApiParams],
+    ) -> Self:
+        """
+        Resume a paused sandbox.
+
+        Convenience alias for :meth:`connect` — paused sandboxes resume
+        automatically on reconnect. Useful for users coming from other
+        sandbox SDKs that expose explicit ``resume`` / ``pause`` pairs.
+
+        :param timeout: Sandbox timeout in seconds — only extended, never
+            shortened, for already-running sandboxes.
+        :return: The same sandbox instance, now in the ``running`` state.
+
+        Example::
+
+            sbx = Sandbox.create()
+            sbx.pause()
+            sbx.resume()
+        """
+        return self.connect(timeout=timeout, **opts)
 
     @overload
     def create_snapshot(

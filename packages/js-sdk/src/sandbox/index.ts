@@ -673,6 +673,27 @@ export class Sandbox extends SandboxApi {
   }
 
   /**
+   * Resume a paused sandbox.
+   *
+   * Convenience alias for {@link Sandbox.connect} — paused sandboxes
+   * resume automatically on reconnect. Useful for users coming from
+   * other sandbox SDKs that expose explicit `resume` / `pause` pairs.
+   *
+   * @param opts connection options (timeout, requestTimeout).
+   * @returns this sandbox, now in the `running` state.
+   *
+   * @example
+   * ```ts
+   * const sandbox = await Sandbox.create()
+   * await sandbox.pause()
+   * await sandbox.resume()
+   * ```
+   */
+  async resume(opts?: SandboxConnectOpts): Promise<this> {
+    return await this.connect(opts)
+  }
+
+  /**
    * Create a snapshot of the sandbox's current state.
    *
    * The sandbox will be paused while the snapshot is being created.
