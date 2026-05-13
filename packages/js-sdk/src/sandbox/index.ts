@@ -508,6 +508,30 @@ export class Sandbox extends SandboxApi {
   }
 
   /**
+   * Get a *full* https URL to the sandbox port — `getHost()` returns
+   * just the host (e.g. `7860-{id}.grotte.parallactic.fr`), which is
+   * easy to feed straight into an `<iframe src>` or `fetch()` and have
+   * it interpreted as a path. `getUrl()` wraps `getHost()` with the
+   * appropriate scheme (`https://` in production, `http://localhost`
+   * in debug mode).
+   *
+   * @param port port the app inside the sandbox listens on.
+   *
+   * @example
+   * ```ts
+   * const sandbox = await Sandbox.create('gradio')
+   * await sandbox.commands.run('python /app.py', { background: true })
+   * const url = sandbox.getUrl(7860) // https://7860-{id}.grotte.parallactic.fr
+   * ```
+   */
+  getUrl(port: number): string {
+    const host = this.getHost(port)
+    if (/^https?:\/\//i.test(host)) return host
+    const scheme = this.connectionConfig.debug ? 'http' : 'https'
+    return `${scheme}://${host}`
+  }
+
+  /**
    * Check if the sandbox is running.
    *
    * @returns `true` if the sandbox is running, `false` otherwise.

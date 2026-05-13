@@ -201,6 +201,31 @@ class SandboxBase:
             self.sandbox_id, self.sandbox_domain, port
         )
 
+    def get_url(self, port: int) -> str:
+        """
+        Get a full HTTPS URL to the sandbox port. `get_host()` returns
+        only the host (e.g. ``7860-{id}.grotte.parallactic.fr``), which
+        is easy to mistake for a full URL and feed straight into a
+        browser or ``requests.get`` only to have it interpreted as a
+        relative path. ``get_url()`` wraps ``get_host()`` with the
+        appropriate scheme (``https://`` in production, ``http://``
+        when the SDK is in debug mode).
+
+        :param port: Port the app inside the sandbox listens on.
+        :return: Full URL, e.g. ``https://7860-{id}.grotte.parallactic.fr``.
+
+        Example::
+
+            sbx = Sandbox.create("gradio")
+            sbx.commands.run("python /app.py", background=True)
+            url = sbx.get_url(7860)  # https://7860-...grotte.parallactic.fr
+        """
+        host = self.get_host(port)
+        if host.startswith("http://") or host.startswith("https://"):
+            return host
+        scheme = "http" if self.connection_config.debug else "https"
+        return f"{scheme}://{host}"
+
     def get_mcp_url(self) -> str:
         """
         Get the MCP URL for the sandbox.

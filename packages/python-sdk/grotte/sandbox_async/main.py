@@ -138,6 +138,33 @@ class AsyncSandbox(SandboxApi):
         )
         self._git = Git(self._commands)
 
+    def get_host(self, port: int) -> str:
+        """
+        Get the host address (without scheme) to connect to the sandbox port.
+
+        :param port: Port the app inside the sandbox listens on.
+        :return: Host, e.g. ``7860-{id}.grotte.parallactic.fr``.
+        """
+        return self.connection_config.get_host(
+            self.sandbox_id, self.sandbox_domain, port
+        )
+
+    def get_url(self, port: int) -> str:
+        """
+        Get a full HTTPS URL to the sandbox port (scheme + host).
+        Wraps :meth:`get_host` so the returned string is always safe to
+        feed into a browser or HTTP client without being interpreted as
+        a relative path.
+
+        :param port: Port the app inside the sandbox listens on.
+        :return: Full URL, e.g. ``https://7860-{id}.grotte.parallactic.fr``.
+        """
+        host = self.get_host(port)
+        if host.startswith("http://") or host.startswith("https://"):
+            return host
+        scheme = "http" if self.connection_config.debug else "https"
+        return f"{scheme}://{host}"
+
     async def is_running(self, request_timeout: Optional[float] = None) -> bool:
         """
         Check if the sandbox is running.
