@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-import { dynamicImport, dynamicRequire } from '../utils'
+import { dynamicImport } from '../utils'
 import { TemplateError } from '../errors'
 import { BASE_STEP_NAME, FINALIZE_STEP_NAME } from './consts'
 import type { Path } from 'glob'
@@ -320,10 +320,12 @@ export function getCallerDirectory(depth: number): string | undefined {
 
   // Handle file:// URLs returned by getFileName() in ESM modules
   if (fileName.startsWith('file:')) {
-    // we use the dynamic import to avoid bundling node:url for browser compatibility
-    // getCallerDirectory method is not called in the browser
-    const { fileURLToPath } =
-      dynamicRequire<typeof import('node:url')>('node:url')
+    // Browser builds never reach this branch (getCallerDirectory is
+    // Node-only). The literal `require('node:url')` keeps the string
+    // visible to bundler tracers — see envd/http2.ts loadUndici for
+    // the longer explanation.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { fileURLToPath } = require('node:url') as typeof import('node:url')
     fileName = fileURLToPath(fileName)
   }
 

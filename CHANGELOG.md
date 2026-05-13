@@ -1,5 +1,21 @@
 # grotte SDK changelog
 
+## 0.1.5 — 2026-05-13
+
+### Fixed
+- **JS SDK**: `Cannot find module 'undici'` at runtime in Next.js
+  standalone builds (Docker / serverless). The previous `dynamicRequire`
+  wrapper took the module name as a parameter, which hid the
+  `'undici'` literal from bundler tracers — they couldn't see what to
+  copy into the standalone bundle and silently omitted the dep. The
+  envd HTTP/2 path now uses a literal `require('undici')` inside a
+  Node-runtime-gated function, so static tracers walk it correctly
+  while edge runtimes still bypass the require. Same treatment for
+  `require('node:url')` in `template/utils.ts`.
+
+### Internal
+- Python SDK bumped in lockstep — no Python-side code change in 0.1.5.
+
 ## 0.1.4 — 2026-05-13
 
 ### Added

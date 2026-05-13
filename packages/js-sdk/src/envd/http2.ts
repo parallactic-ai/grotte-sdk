@@ -1,10 +1,33 @@
-import { dynamicRequire, runtime } from '../utils'
+import { runtime } from '../utils'
 
 type Undici = typeof import('undici')
 type UndiciDispatcher = InstanceType<Undici['Agent']>
 type UndiciRequestInit = RequestInit & {
   dispatcher: UndiciDispatcher
   duplex?: 'half'
+}
+
+/**
+ * Load `undici` from the host's node_modules at runtime.
+ *
+ * Why this is a top-level helper with a *literal* `require('undici')`
+ * rather than the older `dynamicRequire('undici')`:
+ *
+ * The previous wrapper took the module name as a parameter
+ * (`require(module)`), which made the `'undici'` string invisible to
+ * static bundler tracers (Next.js webpack, Vercel ncc, esbuild's
+ * metafile, etc.). Those tracers walk literal `require('…')` /
+ * `import '…'` strings to decide what to copy into the output, so the
+ * parameter form caused `undici` to be silently dropped from
+ * `.next/standalone/node_modules` and crash at runtime with
+ * `Cannot find module 'undici'`. Embedding the literal at the call
+ * site fixes the trace, while keeping the call *inside* a function
+ * preserves edge-runtime compatibility (the function only fires when
+ * `runtime === 'node'`).
+ */
+function loadUndici(): Undici {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  return require('undici') as Undici
 }
 type EnvdFetchOptions = {
   connectionLimit?: number
@@ -21,7 +44,7 @@ export function createEnvdFetchForRuntime(
     return fetch
   }
 
-  const { Agent, fetch: undiciFetch } = dynamicRequire<Undici>('undici')
+  const { Agent, fetch: undiciFetch } = loadUndici()
   const dispatcherOptions: { allowH2: true; connections?: number } = {
     allowH2: true,
   }
