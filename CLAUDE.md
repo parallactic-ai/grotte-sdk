@@ -5,13 +5,22 @@ The GROTTE Python + JavaScript SDK + CLI monorepo. Forked from
 `@grotte/cli` (npm) with the `grotte` binary, and `@grotte/python-sdk`
 (internal workspace name; PyPI is just `grotte`).
 
-## Live (verified 2026-05-13 against api.grotte.parallactic.fr)
+## Live (verified 2026-05-15 against api.grotte.parallactic.fr)
 
 | Registry | Package | Version | Notes |
 |---|---|---|---|
-| npm | `grotte` (JS SDK) | **0.1.3** | adds `Sandbox.resume()` (alias for `connect()`) |
-| npm | `@grotte/cli` | **0.1.4** | adds `snapshot delete` + `sandbox create --json` |
-| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.3** | adds `Sandbox.resume()` + `filesystem` BC alias; fixes broken `grotte.parallactic.fr/docs` URL in `Sandbox` docstring |
+| npm | `grotte` (JS SDK) | **0.1.5** | `get_url(port)` helper (0.1.4) + bundler-traceable `undici` require (0.1.5) |
+| npm | `@grotte/cli` | **0.1.5** | hard-deprecates the v1 `grotte template build` flow — short-circuits with a migration message + exit 2 before the broken DNS lookup against `docker.grotte.parallactic.fr` |
+| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.5** | `get_url(port)` helper (0.1.4); 0.1.5 is a lockstep bump with the JS SDK (no Python code change) |
+
+### Known stale strings (next SDK release)
+
+The JS SDK + Python SDK still emit "run `grotte template build`" inside
+filesystem / sandboxApi error messages when they detect a sandbox that
+needs a template rebuild. The CLI command those messages reference is
+deprecated as of CLI 0.1.5 — update them to `grotte template create`
+on the next SDK bump (call sites: `packages/{js-sdk,python-sdk}/**/sandbox*` and
+`**/filesystem*`).
 
 Sandbox-create lifecycle (create → run command → kill) verified clean
 across all three surfaces using the team's live API key. The `base`
@@ -164,3 +173,17 @@ substitute pattern) over the diff before merging.
   `Jesiel-dev-creator/grotte-app`
 - Server repo (api/orchestrator behind `api.grotte.parallactic.fr`):
   `~/grotte/e2b-infra` (rebrand on branch `rebrand/strings-pass`)
+
+## Agent skills
+
+### Issue tracker
+
+Issues tracked in GitHub at `parallactic-ai/grotte-sdk` via the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Canonical label names (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context — `CONTEXT.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
