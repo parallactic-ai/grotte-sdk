@@ -17,7 +17,7 @@ import {
   fallbackDockerfileName,
 } from 'src/docker/constants'
 import { configOption, pathOption, teamOption } from 'src/options'
-import { getUserConfig } from 'src/user'
+import { DASHBOARD_BASE, getUserConfig } from 'src/user'
 import { getRoot } from 'src/utils/filesystem'
 import { wait } from 'src/utils/wait'
 import * as stripAnsi from 'strip-ansi'
@@ -203,32 +203,46 @@ export const buildCommand = new commander.Command('build')
       }
     ) => {
       try {
-        // Display deprecation warning
-        const deprecationMessage = `${asBold('DEPRECATION WARNING')}
+        // The v1 build flow pushes to docker.${connectionConfig.domain}, which is
+        // not provisioned on the GROTTE Scaleway deployment. Short-circuit before
+        // any DNS lookup or filesystem work and point users at the v2 flow.
+        // GROTTE_IMAGE_URI_MASK is the BYOC escape hatch for self-hosted
+        // deployments that wire up their own registry.
+        if (imageUriMask === undefined) {
+          const message = `${asBold('grotte template build')} (v1) is deprecated and cannot succeed on this GROTTE deployment.
 
-This is the v1 build system which is now deprecated.
-Please migrate to the new build system v2.
+The v1 flow pushes to ${asLocal(
+            `docker.${connectionConfig.domain}`
+          )}, which is not provisioned.
 
-Migration guide: ${asPrimary('https://grotte.parallactic.fr/docs/template/migration-v2')}`
+${asBold('Use the v2 flow instead:')}
 
-        const deprecationWarning = boxen.default(deprecationMessage, {
-          padding: {
-            bottom: 0,
-            top: 0,
-            left: 2,
-            right: 2,
-          },
-          margin: {
-            top: 1,
-            bottom: 1,
-            left: 0,
-            right: 0,
-          },
-          borderColor: 'yellow',
-          borderStyle: 'round',
-        })
+  • Dashboard:  ${asPrimary(`${DASHBOARD_BASE}/templates`)} → "New template" (recommended)
+  • CLI v2:     ${asPrimary('grotte template create <template-name>')}
+  • Migrate:    ${asPrimary(
+    'grotte template migrate'
+  )}  ${asLocal('# converts grotte.toml + Dockerfile to v2')}
 
-        console.log(deprecationWarning)
+Docs: ${asPrimary('https://grotte.parallactic.fr/docs/template/migration-v2')}
+
+${asLocal(
+  '(Self-hosting with your own Docker registry? Set GROTTE_IMAGE_URI_MASK to bypass this check.)'
+)}`
+
+          const boxed = boxen.default(message, {
+            padding: { top: 1, bottom: 1, left: 2, right: 2 },
+            margin: { top: 1, bottom: 1, left: 0, right: 0 },
+            borderColor: 'yellow',
+            borderStyle: 'round',
+            title: 'DEPRECATED — v1 build',
+            titleAlignment: 'left',
+          })
+
+          console.error(boxed)
+          // Exit code 2 (usage error) — distinct from build failures so CI
+          // scripts can tell migration is required, not just "build broke".
+          process.exit(2)
+        }
 
         const dockerInstalled = commandExists.sync('docker')
         if (!dockerInstalled) {

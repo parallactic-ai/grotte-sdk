@@ -9,7 +9,7 @@ import { authCommand } from './auth'
 export const program = new commander.Command()
   .description(
     `Create sandbox templates from Dockerfiles by running ${asPrimary(
-      'grotte template build'
+      'grotte template create'
     )} then use our SDKs to create sandboxes from these templates.
 
 Visit ${asPrimary(

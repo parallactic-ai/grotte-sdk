@@ -62,8 +62,16 @@ grotte sandbox create <snapshot-id>
 ```bash
 grotte template list                 # list available environments
 grotte template init                 # scaffold a new template directory
-grotte template build                # build & push a template
+grotte template create <name>        # build a Dockerfile into a template (v2)
+grotte template migrate              # migrate a v1 grotte.toml + Dockerfile to v2
 ```
+
+> The legacy `grotte template build` (v1) is deprecated — it pushed to a
+> Docker registry that is not provisioned on the GROTTE Scaleway
+> deployment. Use `grotte template create` or build from the
+> [dashboard](https://app.grotte.parallactic.fr/dashboard/templates)
+> instead. See the
+> [migration guide](https://grotte.parallactic.fr/docs/template/migration-v2).
 
 ### Account
 
