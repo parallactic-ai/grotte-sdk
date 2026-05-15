@@ -71,7 +71,7 @@ grotte template migrate              # migrate a v1 grotte.toml + Dockerfile to 
 > deployment. Use `grotte template create` or build from the
 > [dashboard](https://app.grotte.parallactic.fr/dashboard/templates)
 > instead. See the
-> [migration guide](https://grotte.parallactic.fr/docs/template/migration-v2).
+> [migration guide](https://app.grotte.parallactic.fr/docs/template/migration-v2).
 
 ### Account
 

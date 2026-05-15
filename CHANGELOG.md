@@ -1,5 +1,22 @@
 # grotte SDK changelog
 
+## 0.1.6 — 2026-05-15
+
+### Fixed
+- **All packages**: every error-message and runtime URL referencing
+  `https://grotte.parallactic.fr/*` now points at
+  `https://app.grotte.parallactic.fr/*`. The apex `grotte.parallactic.fr`
+  is not provisioned (NXDOMAIN) — the canonical, DNS-verified host is
+  the dashboard at `app.grotte.parallactic.fr`. Affected: CLI's auth
+  prompts, deprecation message (`template build`), templates option
+  hints, troubleshooting links; JS SDK + Python SDK API-key /
+  access-token error messages; CLI scaffolded README template; all
+  three packages' `homepage` metadata.
+- This unblocks the `/docs/*` deploy that landed in
+  `parallactic-ai/grotte-app#26` — the docs are live at
+  `app.grotte.parallactic.fr/docs/*` and now the SDK error messages
+  link to a real URL instead of NXDOMAIN.
+
 ## CLI 0.1.5 — 2026-05-15
 
 ### Changed

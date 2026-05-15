@@ -9,9 +9,13 @@ The GROTTE Python + JavaScript SDK + CLI monorepo. Forked from
 
 | Registry | Package | Version | Notes |
 |---|---|---|---|
-| npm | `grotte` (JS SDK) | **0.1.5** | `get_url(port)` helper (0.1.4) + bundler-traceable `undici` require (0.1.5) |
-| npm | `@grotte/cli` | **0.1.5** | hard-deprecates the v1 `grotte template build` flow — short-circuits with a migration message + exit 2 before the broken DNS lookup against `docker.grotte.parallactic.fr` |
-| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.5** | `get_url(port)` helper (0.1.4); 0.1.5 is a lockstep bump with the JS SDK (no Python code change) |
+| npm | `grotte` (JS SDK) | **0.1.6** | URL fix: every error message now cites `app.grotte.parallactic.fr` (the canonical, DNS-verified host) instead of the apex `grotte.parallactic.fr` (NXDOMAIN). 0.1.5 added `get_url(port)` + bundler-traceable `undici` require. |
+| npm | `@grotte/cli` | **0.1.6** | URL fix (same as JS SDK). 0.1.5 hard-deprecated the v1 `grotte template build` flow — short-circuits with a migration message + exit 2 before the broken DNS lookup against `docker.grotte.parallactic.fr`. |
+| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.6** | URL fix (same as JS SDK). 0.1.5 lockstep bump with JS. 0.1.4 added `get_url(port)`. |
+
+The docs site backing those URLs is live at
+`https://app.grotte.parallactic.fr/docs/*` (deployed via
+`parallactic-ai/grotte-app#26` → Scaleway container revision `ba598ed`).
 
 ### Known stale strings (next SDK release)
 

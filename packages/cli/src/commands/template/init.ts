@@ -320,7 +320,7 @@ export const initCommand = new commander.Command('init')
 
         console.log(
           `\nLearn more about Sandbox Templates: ${asPrimary(
-            'https://grotte.parallactic.fr/docs'
+            'https://app.grotte.parallactic.fr/docs'
           )}\n`
         )
       } catch (err: any) {

@@ -1,13 +1,13 @@
 {
   "name": "@grotte/cli",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "CLI for managing grotte sandbox templates",
-  "homepage": "https://grotte.parallactic.fr",
+  "homepage": "https://app.grotte.parallactic.fr",
   "license": "MIT",
   "author": {
     "name": "Parallactic AI SAS",
     "email": "hello@grotte.parallactic.fr",
-    "url": "https://grotte.parallactic.fr"
+    "url": "https://app.grotte.parallactic.fr"
   },
   "bugs": "https://github.com/parallactic-ai/grotte-sdk/issues",
   "repository": {

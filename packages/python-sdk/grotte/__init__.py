@@ -1,7 +1,7 @@
 """
 Secure sandboxed cloud environments made for AI agents and AI apps.
 
-Check docs [here](https://grotte.parallactic.fr/docs).
+Check docs [here](https://app.grotte.parallactic.fr/docs).
 
 GROTTE Sandbox is a secure cloud sandbox environment made for AI agents and AI
 apps.

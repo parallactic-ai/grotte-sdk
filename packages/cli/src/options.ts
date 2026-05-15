@@ -13,7 +13,7 @@ export const configOption = new commander.Option(
   '--config <grotte-toml>',
   `specify path to the GROTTE config toml. By default GROTTE tries to find ${asBold(
     './grotte.toml'
-  )} in root directory. We recommend using the new build system (https://grotte.parallactic.fr/docs/template/defining-template) that does not use config files.`
+  )} in root directory. We recommend using the new build system (https://app.grotte.parallactic.fr/docs/template/defining-template) that does not use config files.`
 )
 
 export const selectOption = new commander.Option(
@@ -28,5 +28,5 @@ export const selectMultipleOption = new commander.Option(
 
 export const teamOption = new commander.Option(
   '-t, --team <team-id>',
-  'specify the team ID that the operation will be associated with. You can find team ID in the team settings in the GROTTE dashboard (https://grotte.parallactic.fr/dashboard?tab=team).'
+  'specify the team ID that the operation will be associated with. You can find team ID in the team settings in the GROTTE dashboard (https://app.grotte.parallactic.fr/dashboard?tab=team).'
 )
