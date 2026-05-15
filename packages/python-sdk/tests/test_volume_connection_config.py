@@ -7,7 +7,7 @@ def test_volume_api_url_defaults_correctly(monkeypatch):
     monkeypatch.delenv("GROTTE_DEBUG", raising=False)
 
     config = VolumeConnectionConfig()
-    assert config.api_url == "https://api.grotte.parallactic.fr"
+    assert config.api_url == "https://api.grotte.dev"
 
 
 def test_volume_api_url_in_args():

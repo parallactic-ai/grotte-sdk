@@ -13,7 +13,7 @@ export const program = new commander.Command()
     )} then use our SDKs to create sandboxes from these templates.
 
 Visit ${asPrimary(
-      'GROTTE docs (https://app.grotte.parallactic.fr/docs)'
+      'GROTTE docs (https://app.grotte.dev/docs)'
     )} to learn how to create sandbox templates and start sandboxes.
 `
   )

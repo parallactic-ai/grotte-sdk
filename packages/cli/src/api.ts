@@ -13,11 +13,11 @@ const authErrorBox = (keyName: string) => {
   let msg
   switch (keyName) {
     case 'GROTTE_API_KEY':
-      link = 'https://app.grotte.parallactic.fr/dashboard?tab=keys'
+      link = 'https://app.grotte.dev/dashboard?tab=keys'
       msg = 'API key'
       break
     case 'GROTTE_ACCESS_TOKEN':
-      link = 'https://app.grotte.parallactic.fr/dashboard?tab=personal'
+      link = 'https://app.grotte.dev/dashboard?tab=personal'
       msg = 'access token'
       break
   }

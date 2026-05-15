@@ -36,8 +36,8 @@ pip install grotte
 ```
 
 ### 2. Get your GROTTE API key
-1. Sign up to GROTTE [here](https://app.grotte.parallactic.fr/).
-2. Get your API key [here](https://app.grotte.parallactic.fr/?tab=keys).
+1. Sign up to GROTTE [here](https://app.grotte.dev/).
+2. Get your API key [here](https://app.grotte.dev/?tab=keys).
 3. Set environment variable with your API key
 ```
 GROTTE_API_KEY=grt_***
@@ -95,4 +95,4 @@ _Coming soon._ A cookbook of end-to-end examples across LLMs and AI agent framew
 
 ## Self-hosting
 
-_Coming soon._ A self-hostable infrastructure stack (Terraform-deployed across AWS / GCP / SCW) is on the roadmap at `parallactic-ai/infra`. Until then, GROTTE is available as a managed service on `api.grotte.parallactic.fr` — see step 2 above to get an API key.
+_Coming soon._ A self-hostable infrastructure stack (Terraform-deployed across AWS / GCP / SCW) is on the roadmap at `parallactic-ai/infra`. Until then, GROTTE is available as a managed service on `api.grotte.dev` — see step 2 above to get an API key.

@@ -17,7 +17,7 @@ export interface VolumeApiOpts {
   /**
    * Domain to use for the volume API.
    *
-   * @default GROTTE_DOMAIN // environment variable or `grotte.parallactic.fr`
+   * @default GROTTE_DOMAIN // environment variable or `grotte.dev`
    */
   domain?: string
   /**
@@ -72,7 +72,7 @@ export class VolumeConnectionConfig {
   }
 
   private static get domain() {
-    return getEnvVar('GROTTE_DOMAIN') || 'grotte.parallactic.fr'
+    return getEnvVar('GROTTE_DOMAIN') || 'grotte.dev'
   }
 
   private static get debug() {

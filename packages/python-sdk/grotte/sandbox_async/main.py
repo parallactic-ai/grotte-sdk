@@ -143,7 +143,7 @@ class AsyncSandbox(SandboxApi):
         Get the host address (without scheme) to connect to the sandbox port.
 
         :param port: Port the app inside the sandbox listens on.
-        :return: Host, e.g. ``7860-{id}.grotte.parallactic.fr``.
+        :return: Host, e.g. ``7860-{id}.grotte.dev``.
         """
         return self.connection_config.get_host(
             self.sandbox_id, self.sandbox_domain, port
@@ -157,7 +157,7 @@ class AsyncSandbox(SandboxApi):
         a relative path.
 
         :param port: Port the app inside the sandbox listens on.
-        :return: Full URL, e.g. ``https://7860-{id}.grotte.parallactic.fr``.
+        :return: Full URL, e.g. ``https://7860-{id}.grotte.dev``.
         """
         host = self.get_host(port)
         if host.startswith("http://") or host.startswith("https://"):

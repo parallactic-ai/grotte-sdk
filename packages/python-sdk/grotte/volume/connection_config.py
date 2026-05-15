@@ -17,7 +17,7 @@ class VolumeApiParams(TypedDict, total=False):
     """
 
     domain: Optional[str]
-    """Domain to use for the volume API, defaults to `GROTTE_DOMAIN` or `grotte.parallactic.fr`."""
+    """Domain to use for the volume API, defaults to `GROTTE_DOMAIN` or `grotte.dev`."""
 
     debug: Optional[bool]
     """Whether to use debug mode, defaults to `GROTTE_DEBUG` environment variable."""
@@ -47,7 +47,7 @@ class VolumeConnectionConfig:
 
     @staticmethod
     def _domain():
-        return os.getenv("GROTTE_DOMAIN") or "grotte.parallactic.fr"
+        return os.getenv("GROTTE_DOMAIN") or "grotte.dev"
 
     @staticmethod
     def _debug():

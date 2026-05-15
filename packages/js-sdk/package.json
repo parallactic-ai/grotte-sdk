@@ -1,13 +1,13 @@
 {
   "name": "grotte",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "GROTTE SDK that give agents cloud environments",
-  "homepage": "https://app.grotte.parallactic.fr",
+  "homepage": "https://app.grotte.dev",
   "license": "MIT",
   "author": {
     "name": "Parallactic AI SAS",
-    "email": "hello@grotte.parallactic.fr",
-    "url": "https://app.grotte.parallactic.fr"
+    "email": "support@grotte.dev",
+    "url": "https://app.grotte.dev"
   },
   "bugs": "https://github.com/parallactic-ai/grotte-sdk/issues",
   "repository": {

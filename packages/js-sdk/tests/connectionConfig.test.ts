@@ -30,7 +30,7 @@ test('api_url defaults correctly', () => {
   delete process.env.GROTTE_DEBUG
 
   const config = new ConnectionConfig()
-  assert.equal(config.apiUrl, 'https://api.grotte.parallactic.fr')
+  assert.equal(config.apiUrl, 'https://api.grotte.dev')
 })
 
 test('api_url in args', () => {

@@ -24,7 +24,7 @@ grotte auth login
 grotte auth login --key grt_your_key_here
 ```
 
-Get your API key at [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr).
+Get your API key at [app.grotte.dev](https://app.grotte.dev).
 
 ## Commands
 
@@ -69,9 +69,9 @@ grotte template migrate              # migrate a v1 grotte.toml + Dockerfile to 
 > The legacy `grotte template build` (v1) is deprecated — it pushed to a
 > Docker registry that is not provisioned on the GROTTE Scaleway
 > deployment. Use `grotte template create` or build from the
-> [dashboard](https://app.grotte.parallactic.fr/dashboard/templates)
+> [dashboard](https://app.grotte.dev/dashboard/templates)
 > instead. See the
-> [migration guide](https://app.grotte.parallactic.fr/docs/template/migration-v2).
+> [migration guide](https://app.grotte.dev/docs/template/migration-v2).
 
 ### Account
 
@@ -103,7 +103,7 @@ takes precedence when both are set.
 
 ## Links
 
-- Dashboard: [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr)
+- Dashboard: [app.grotte.dev](https://app.grotte.dev)
 - SDK:       [npmjs.com/package/grotte](https://npmjs.com/package/grotte)
 - Contact:   [jesiel@parallactic.fr](mailto:jesiel@parallactic.fr)
 

@@ -223,7 +223,7 @@ ${asBold('Use the v2 flow instead:')}
     'grotte template migrate'
   )}  ${asLocal('# converts grotte.toml + Dockerfile to v2')}
 
-Docs: ${asPrimary('https://app.grotte.parallactic.fr/docs/template/migration-v2')}
+Docs: ${asPrimary('https://app.grotte.dev/docs/template/migration-v2')}
 
 ${asLocal(
   '(Self-hosting with your own Docker registry? Set GROTTE_IMAGE_URI_MASK to bypass this check.)'
@@ -540,7 +540,7 @@ const sandbox = await Sandbox.create('${
         }')`)
 
         const examplesMessage = `You can now use the template to create custom sandboxes.\nLearn more on ${asPrimary(
-          'https://app.grotte.parallactic.fr/docs'
+          'https://app.grotte.dev/docs'
         )}`
 
         const exampleHeader = boxen.default(examplesMessage, {
@@ -581,7 +581,7 @@ const sandbox = await Sandbox.create('${
             aliases,
             ...template,
           })} failed.\nCheck the logs above for more details or contact us ${asPrimary(
-            '(https://app.grotte.parallactic.fr/docs/support)'
+            '(https://app.grotte.dev/docs/support)'
           )} to get help.\n`
         )
     }

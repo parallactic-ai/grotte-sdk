@@ -20,16 +20,25 @@ export const USER_CONFIG_PATH = path.join(
   'config.json'
 ) // TODO: Keep in Keychain
 
+// `grotte.dev` is the canonical brand domain across the whole platform
+// as of 0.2.0 (2026-05-16) — dashboard at `app.grotte.dev`, docs at
+// `app.grotte.dev/docs/*`, API at `api.grotte.dev`, sandbox URLs at
+// `<port>-<id>.sandbox.grotte.dev`. The legacy `*.grotte.parallactic.fr`
+// hosts still respond for backward compatibility (dashboard accepts
+// both as custom domains; orchestrator emits whichever the cluster
+// runs). Override via `GROTTE_DOMAIN=grotte.parallactic.fr` (or
+// `GROTTE_DASHBOARD_BASE` / `GROTTE_DOCS_BASE` for full URL overrides)
+// to pin to legacy hosts.
 export const DOCS_BASE =
   process.env.GROTTE_DOCS_BASE ||
-  `https://${process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'}/docs`
+  `https://app.${process.env.GROTTE_DOMAIN || 'grotte.dev'}/docs`
 
 // The dashboard is hosted on its own subdomain (`app.<domain>`), distinct
 // from the marketing/landing site at `<domain>`. Both honour
 // GROTTE_DASHBOARD_BASE for full overrides.
 export const DASHBOARD_BASE =
   process.env.GROTTE_DASHBOARD_BASE ||
-  `https://app.${process.env.GROTTE_DOMAIN || 'grotte.parallactic.fr'}/dashboard`
+  `https://app.${process.env.GROTTE_DOMAIN || 'grotte.dev'}/dashboard`
 
 // The dashboard's sandbox list page surfaces every active sandbox for
 // the team — there's no per-sandbox inspect page yet, so we point the

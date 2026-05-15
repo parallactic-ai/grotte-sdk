@@ -54,7 +54,13 @@ class ConnectionConfig:
 
     @staticmethod
     def _domain():
-        return os.getenv("GROTTE_DOMAIN") or "grotte.parallactic.fr"
+        # 0.2.0 default: `grotte.dev` is the canonical brand domain.
+        # Legacy `grotte.parallactic.fr` clusters still respond — override
+        # via GROTTE_DOMAIN to pin to them. The actual sandbox URL suffix
+        # comes from `CreateResponse.domain` returned by the orchestrator,
+        # not this default, so a 0.2.0 client talking to a legacy cluster
+        # gets parallactic.fr sandbox URLs without code changes.
+        return os.getenv("GROTTE_DOMAIN") or "grotte.dev"
 
     @staticmethod
     def _debug():

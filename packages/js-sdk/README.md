@@ -28,7 +28,7 @@ Set your API key as an environment variable:
 export GROTTE_API_KEY=grt_your_key_here
 ```
 
-Get your API key at [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr).
+Get your API key at [app.grotte.dev](https://app.grotte.dev).
 
 ## API
 
@@ -108,8 +108,8 @@ const sbx = await Sandbox.create('base', {
 
 ## Links
 
-- Dashboard: [app.grotte.parallactic.fr](https://app.grotte.parallactic.fr)
-- API:       [api.grotte.parallactic.fr](https://api.grotte.parallactic.fr)
+- Dashboard: [app.grotte.dev](https://app.grotte.dev)
+- API:       [api.grotte.dev](https://api.grotte.dev)
 - Docs:      [parallactic.fr/docs](https://parallactic.fr/docs)
 - Contact:   [jesiel@parallactic.fr](mailto:jesiel@parallactic.fr)
 

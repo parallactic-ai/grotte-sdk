@@ -60,7 +60,7 @@ export type SandboxNetworkOpts = {
   /** Specify host mask which will be used for all sandbox requests in the header.
    * You can use the ${PORT} variable that will be replaced with the actual port number of the service.
    *
-   * @default ${PORT}-sandboxid.grotte.parallactic.fr
+   * @default ${PORT}-sandboxid.grotte.dev
    */
   maskRequestHost?: string
 }

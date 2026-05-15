@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "grotte"
-version = "0.1.6"
+version = "0.2.0"
 description = "GROTTE SDK that give agents cloud environments"
-authors = ["grotte <hello@grotte.parallactic.fr>"]
+authors = ["grotte <support@grotte.dev>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://app.grotte.parallactic.fr/"
+homepage = "https://app.grotte.dev/"
 repository = "https://github.com/parallactic-ai/grotte-sdk/tree/main/packages/python-sdk"
 packages = [{ include = "grotte" }, { include = "grt_connect" }]
 # NOTICE ships alongside LICENSE in the wheel/sdist for MIT-fork

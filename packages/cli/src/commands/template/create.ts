@@ -169,7 +169,7 @@ sandbox = await AsyncSandbox.create("${templateName}")`)
 const sandbox = await Sandbox.create('${templateName}')`)
 
         const examplesMessage = `You can now use the template to create custom sandboxes.\nLearn more on ${asPrimary(
-          'https://app.grotte.parallactic.fr/docs'
+          'https://app.grotte.dev/docs'
         )}`
 
         const exampleHeader = boxen.default(examplesMessage, {

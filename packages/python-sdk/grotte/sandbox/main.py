@@ -204,7 +204,7 @@ class SandboxBase:
     def get_url(self, port: int) -> str:
         """
         Get a full HTTPS URL to the sandbox port. `get_host()` returns
-        only the host (e.g. ``7860-{id}.grotte.parallactic.fr``), which
+        only the host (e.g. ``7860-{id}.grotte.dev``), which
         is easy to mistake for a full URL and feed straight into a
         browser or ``requests.get`` only to have it interpreted as a
         relative path. ``get_url()`` wraps ``get_host()`` with the
@@ -212,13 +212,13 @@ class SandboxBase:
         when the SDK is in debug mode).
 
         :param port: Port the app inside the sandbox listens on.
-        :return: Full URL, e.g. ``https://7860-{id}.grotte.parallactic.fr``.
+        :return: Full URL, e.g. ``https://7860-{id}.grotte.dev``.
 
         Example::
 
             sbx = Sandbox.create("gradio")
             sbx.commands.run("python /app.py", background=True)
-            url = sbx.get_url(7860)  # https://7860-...grotte.parallactic.fr
+            url = sbx.get_url(7860)  # https://7860-...grotte.dev
         """
         host = self.get_host(port)
         if host.startswith("http://") or host.startswith("https://"):

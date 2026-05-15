@@ -5,7 +5,7 @@ def test_api_url_defaults_correctly(monkeypatch):
     monkeypatch.setenv("GROTTE_DOMAIN", "")
 
     config = ConnectionConfig()
-    assert config.api_url == "https://api.grotte.parallactic.fr"
+    assert config.api_url == "https://api.grotte.dev"
 
 
 def test_api_url_in_args():

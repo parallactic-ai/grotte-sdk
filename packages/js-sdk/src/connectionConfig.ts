@@ -26,7 +26,7 @@ export interface ConnectionOpts {
   /**
    * Domain to use for the API.
    *
-   * @default GROTTE_DOMAIN // environment variable or `grotte.parallactic.fr`
+   * @default GROTTE_DOMAIN // environment variable or `grotte.dev`
    */
   domain?: string
   /**
@@ -102,7 +102,14 @@ export class ConnectionConfig {
   }
 
   private static get domain() {
-    return getEnvVar('GROTTE_DOMAIN') || 'grotte.parallactic.fr'
+    // 0.2.0 default: `grotte.dev` is the canonical brand domain.
+    // Legacy `grotte.parallactic.fr` clusters still respond — override
+    // via the GROTTE_DOMAIN env var (or pass `domain:` to the
+    // ConnectionConfig constructor) to pin to them. The actual sandbox
+    // URL suffix comes from `CreateResponse.domain` on the orchestrator,
+    // not this default — so a 0.2.0 client talking to a legacy cluster
+    // gets parallactic.fr sandbox URLs without any code changes.
+    return getEnvVar('GROTTE_DOMAIN') || 'grotte.dev'
   }
 
   private static get apiUrl() {

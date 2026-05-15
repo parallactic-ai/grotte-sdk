@@ -234,7 +234,7 @@ export const migrateCommand = new commander.Command('migrate')
 
         console.log(
           `\nLearn more about Template SDK: ${asPrimary(
-            'https://app.grotte.parallactic.fr/docs'
+            'https://app.grotte.dev/docs'
           )}\n`
         )
         success = true

@@ -5,17 +5,31 @@ The GROTTE Python + JavaScript SDK + CLI monorepo. Forked from
 `@grotte/cli` (npm) with the `grotte` binary, and `@grotte/python-sdk`
 (internal workspace name; PyPI is just `grotte`).
 
-## Live (verified 2026-05-15 against api.grotte.parallactic.fr)
+## Live (verified 2026-05-16 against api.grotte.dev)
 
 | Registry | Package | Version | Notes |
 |---|---|---|---|
-| npm | `grotte` (JS SDK) | **0.1.6** | URL fix: every error message now cites `app.grotte.parallactic.fr` (the canonical, DNS-verified host) instead of the apex `grotte.parallactic.fr` (NXDOMAIN). 0.1.5 added `get_url(port)` + bundler-traceable `undici` require. |
-| npm | `@grotte/cli` | **0.1.6** | URL fix (same as JS SDK). 0.1.5 hard-deprecated the v1 `grotte template build` flow — short-circuits with a migration message + exit 2 before the broken DNS lookup against `docker.grotte.parallactic.fr`. |
-| PyPI | `grotte` (Python SDK, both sync + async) | **0.1.6** | URL fix (same as JS SDK). 0.1.5 lockstep bump with JS. 0.1.4 added `get_url(port)`. |
+| npm | `grotte` (JS SDK) | **0.2.0** | **Default API host flipped** `api.grotte.parallactic.fr` → `api.grotte.dev`. Sandbox URLs now emit `sandbox.grotte.dev` (per orchestrator's `CreateResponse.domain` field). Legacy clusters still work — override via `GROTTE_API_URL` env var or `apiUrl:` constructor option. |
+| npm | `@grotte/cli` | **0.1.7** | Dashboard default flipped to `app.grotte.dev`. `grotte auth login` no longer 404s (was opening `/docs/api/cli` instead of `/dashboard/api/cli`). Override via `GROTTE_DASHBOARD_BASE` / `GROTTE_DOMAIN`. |
+| PyPI | `grotte` (Python SDK, both sync + async) | **0.2.0** | Same default-flip as JS SDK. URL helpers (`get_host` / `get_url`) honour orchestrator's `sandbox_domain` field — 0.2.0 client talking to a legacy cluster still gets parallactic.fr URLs correctly. |
 
 The docs site backing those URLs is live at
-`https://app.grotte.parallactic.fr/docs/*` (deployed via
-`parallactic-ai/grotte-app#26` → Scaleway container revision `ba598ed`).
+`https://app.grotte.parallactic.fr/docs/*` AND
+`https://app.grotte.dev/docs/*` (same container, both domains accepted;
+deployed via `parallactic-ai/grotte-app#26` → Scaleway container
+revision `ba598ed`).
+
+### Gates verified before publish (0.2.0)
+
+- **A**: `curl -X POST https://api.grotte.dev/sandboxes` returns
+  `domain: "sandbox.grotte.dev"` — infra confirmed greenlit.
+- **B**: 0.2.0 client against the new cluster emits
+  `sandbox.grotte.dev` URLs and the sandbox lifecycle works.
+- **C**: 0.2.0 client against the legacy cluster (via
+  `GROTTE_API_URL=https://api.grotte.parallactic.fr`) emits
+  `sandbox.grotte.parallactic.fr` URLs — backward compat holds because
+  URL helpers honour orchestrator's `CreateResponse.domain`, not a
+  hardcoded TLD.
 
 ### Known stale strings (next SDK release)
 
